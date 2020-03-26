@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
+:root {
+  --color-primary-dark: #303F9F;
+  --color-primary: #3F51B5;
+  --color-primary-light: #C5CAE9;
+  --color-text-white: #FFFFFF;
+  --color-accent: #FF9800;
+  --color-text-primary: #212121;
+  --color-text-secondary: #757575;
+  --color-divider: #BDBDBD;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+}
+
+main {
+  padding: 1rem;
+  margin: auto;
+}
+
+form {
+  display: inline;
+}
+
+.centered {
+  text-align: center;
+}
+
+.image {
+  height: 20rem;
+}
+
+.image img {
+  height: 100%;
+}
+
+.main-header {
+  width: 100%;
+  height: 3.5rem;
+  background-color: var(--color-primary-dark);
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.main-header__nav {
+  height: 100%;
+  width: 100%;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-header__item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.main-header__item {
+  margin: 0 1rem;
+  padding: 0;
+}
+
+.main-header__item a,
+.main-header__item button {
+  font: inherit;
+  background: transparent;
+  border: none;
+  text-decoration: none;
+  color: var(--color-text-white);
+  cursor: pointer;
+}
+
+.main-header__item a:hover,
+.main-header__item a:active,
+.main-header__item a.active,
+.main-header__item button:hover,
+.main-header__item button:active {
+  color: var(--color-accent);
+}
+
+.mobile-nav {
+  width: 30rem;
+  height: 100vh;
+  max-width: 90%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: var(--color-text-white);
+  z-index: 10;
+  padding: 2rem 1rem 1rem 2rem;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+.mobile-nav__item-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-nav__item {
+  margin: 1rem;
+  padding: 0;
+}
+
+.mobile-nav__item a,
+.mobile-nav__item button {
+  font: inherit;
+  text-decoration: none;
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.mobile-nav__item a:active,
+.mobile-nav__item a:hover,
+.mobile-nav__item a.active,
+.mobile-nav__item button:hover,
+.mobile-nav__item button:active {
+  background: var(--color-primary-dark);
+  color: var(--color-text-white);
+  border-radius: 3px;
+}
+
+#side-menu-toggle {
+  border: 1px solid var(--color-primary-light);
+  font: inherit;
+  padding: 0.5rem;
+  display: block;
+  background: transparent;
+  color: var(--color-text-white);
+  cursor: pointer;
+}
+
+#side-menu-toggle:focus {
+  outline: none;
+}
+
+#side-menu-toggle:active,
+#side-menu-toggle:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+  display: none;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+
+.card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.card__header,
+.card__content {
+  padding: 1rem;
+}
+
+.card__header h1,
+.card__content h1,
+.card__content h2,
+.card__content p {
+  margin: 0;
+}
+
+.card__image {
+  width: 100%;
+}
+
+.card__image img {
+  width: 100%;
+}
+
+.card__actions {
+  padding: 1rem;
+  text-align: center;
+}
+
+.card__actions button,
+.card__actions a {
+  margin: 0 0.25rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  font: inherit;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-text-white);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.btn.danger {
+  color: red;
+  border-color: red;
+}
+
+.btn.danger:hover,
+.btn.danger:active {
+  background: red;
+  color: var(--color-text-white);
+}
+
+@media (min-width: 768px) {
+  .main-header__nav {
+    display: flex;
+  }
+
+  #side-menu-toggle {
+    display: none;
+  }
+}
