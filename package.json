@@ -1,0 +1,36 @@
+{
+  "name": "giftkart",
+  "version": "1.0.0",
+  "description": "A server-rendered e-commerce website made using Express.js and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "devserver": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ninad99/GiftKart.git"
+  },
+  "author": "Ninad Subba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ninad99/GiftKart/issues"
+  },
+  "homepage": "https://github.com/Ninad99/GiftKart#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "connect-mongodb-session": "^2.3.1",
+    "csurf": "^1.11.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.4.0",
+    "mongoose": "^5.9.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
