@@ -15,18 +15,20 @@ exports.getUploadProduct = (req, res, next) => {
 };
 
 exports.postUploadProduct = async (req, res, next) => {
+	
 	const prod = {
 		title: req.body.title,
-		price: req.body.price,
+		price:  parseInt(req.body.price),
 		description: req.body.description,
 		imageUrl: req.body.imageUrl,
 		category: req.body.category,
-		quantity: req.body.quantity,
+		quantity: parseInt(req.body.quantity),
 		ages: {
-			min: req.body.minage,
-			max: req.body.maxage
+			min: parseInt(req.body.minage),
+			max: parseInt(req.body.maxage)
 		},
-		gender: req.body.gender
+		gender: req.body.gender,
+		occasion: req.body.occasion
 	};
 
 	let errorMessage = null;
@@ -34,6 +36,7 @@ exports.postUploadProduct = async (req, res, next) => {
 	try {
 		const product = await new Product(prod);
 		await product.save();
+		console.log(prod);
 		errorMessage = "Product Added successfully";
 	} catch (e) {
 		errorMessage = "error";

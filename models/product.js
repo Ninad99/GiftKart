@@ -39,6 +39,11 @@ const productSchema = new Schema({
 		type: String,
 		trim: true,
 		required: true
+	},
+	occasion: {
+		type: String,
+		trim: true,
+		required: true
 	}
 });
 
