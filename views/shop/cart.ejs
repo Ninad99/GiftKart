@@ -1,0 +1,39 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/cart.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+  <main>
+    <% if (products.length > 0) { %>
+      <ul class="cart-list">
+        <% products.forEach(p => { %>
+          <li class="cart-list-item">
+            <div class="cart-list-item--info">
+              <h3><%= p.productId.title %></h3>
+              <h5>Quantity - <%= p.quantity %></h5>
+              <h4>&#8377; <%= p.productId.price * p.quantity %></h4>
+            </div>
+            <form action="/cart-delete-item" method="POST">
+              <input type="hidden" value="<%= p.productId._id %>" name="productId" />
+              <button type="submit" class="btn danger">Delete</button>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+      <hr />
+      <div class="centered">
+        <h3>Cart total = &#8377; <%= totalAmount %></h3>
+        <form action="/create-order" method="POST">
+          <input type="hidden" name="totalamount" value="<%= totalAmount %>">
+          <button class="btn" type="submit">Order Now!</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="centered">
+        <h1>No products in cart!</h1>
+      </div>
+    <% } %>
+  </main>
+<%- include('../includes/end.ejs') %>
