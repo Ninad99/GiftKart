@@ -24,6 +24,7 @@ body {
 main {
   padding: 1rem;
   margin: auto;
+  margin-top: 3.5rem;
 }
 
 form {
@@ -49,6 +50,8 @@ form {
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
+  position: fixed;
+  top: 0;
 }
 
 .main-header__nav {
