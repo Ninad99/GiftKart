@@ -1,11 +1,51 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/auth.css">
 </head>
 
 <body>
-    <%- include('../includes/navigation.ejs') %>
-    
-    <main>
-      Index page
-    </main>
-<%- include('../includes/end.ejs') %>
+  <%- include('../includes/navigation.ejs') %>
+  <main>
+    <form class="signup-form" action="/recommend-products" method="POST">
+      <p class="signup-form-header"><strong>GiftKart</strong> | Recommendations</p>
+      <div  class="form-control">
+        <label for="Age">Age: </label>
+        <select id="Age-select" name="Age">
+          <option value="1">1-10</option>
+          <option value="10">10-20</option>
+          <option value="20">20-30</option>
+          <option value="30">30-40</option>
+          <option value="40">40+</option>
+        </select>
+         Years
+      </div>
+
+      <div class="form-control">
+        <label for="gender">Gender: </label>
+        <select id="gender-select" name="gender">
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+          <option value="B">Both</option>
+        </select>
+      </div>
+     
+      <div class="form-control">
+        <label for="age">price</label>
+        <input type="number" name="age" id="age">
+      </div>
+      <div class="form-control">
+        <label>Age: </label><input type="text" name="gg" />
+      </div>
+      <div class="form-control">
+        <label for="occasion">Occasion </label>
+        <select id="occasion-select" name="occasion" required>
+          <option value="marriage">Marriage</option>
+          <option value="bithday">Female</option>
+          <option value="other">Both</option>
+        </select>
+      </div>
+
+      <button class=" btn" type="submit">Submit</button>
+    </form>
+  </main>
+  <%- include('../includes/end.ejs') %>

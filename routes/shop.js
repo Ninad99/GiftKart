@@ -26,4 +26,8 @@ router.post('/cart-delete-item', isAuth, shopController.postCartDeleteProduct);
 
 // /create-order -> POST
 
+// /recommend-products -> POST 
+router.post("/recommend-products", shopController.postRecommendProducts);
+
+
 module.exports = router;

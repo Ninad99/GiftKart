@@ -72,3 +72,20 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .catch(err => console.log(err));
 }
+
+
+exports.postRecommendProducts = (req, res, next) => {
+	console.log(req.body);
+	//handle further
+
+	Product.find()
+		.then(products => {
+			return res.render("shop/recommend-products", {
+				prods: products,
+				pageTitle: "Recommend Products",
+				path: "/recommend-products"
+			});
+		})
+		.catch(err => console.log(err));
+};
+
