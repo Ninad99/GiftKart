@@ -9,31 +9,38 @@
             <li class="main-header__item">
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
             </li>
-            <!-- <% if (isAuthenticated) { %>
+            <% if (isAuthenticated && !isAdmin) { %>
                 <li class="main-header__item">
                     <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
                 </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
                 </li>
-            <% } %> -->
+            <% } %>
+            <% if (isAdmin) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+                </li>
+            <% } %>
         </ul>
         <ul class="main-header__item-list">
-            <!-- <% if (!isAuthenticated) { %> -->
+            <% if (!isAuthenticated) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin/login' ? 'active' : '' %>" href="/admin/login">Admin Login</a>
+                </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
                 </li>
                 <li class="main-header__item">
                     <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
                 </li>
-            <!-- <% } else { %>
+            <% } else { %>
                 <li class="main-header__item">
-                    <form action="/logout" method="post">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <form action="/logout" method="POST">
                         <button type="submit">Logout</button>
                     </form>
                 </li>
-            <% } %> -->
+            <% } %>
         </ul>
     </nav>
 </header>
@@ -41,33 +48,40 @@
 <nav class="mobile-nav">
     <ul class="mobile-nav__item-list">
         <li class="mobile-nav__item">
-            <a class="<%= path === '/' ? 'active' : '' %>" href="/"><strong>GiftKart</strong> Home</a>
+            <strong>GiftKart</strong>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
         </li>
         <li class="mobile-nav__item">
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
         </li>
-        <!-- <% if (isAuthenticated) { %>
+        <% if (isAuthenticated && !isAdmin) { %>
             <li class="mobile-nav__item">
                 <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
             </li>
             <li class="mobile-nav__item">
                 <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
             </li>
-        <% } %> -->
-        <!-- <% if (!isAuthenticated) { %> -->
+        <% } %>
+        <% if (isAdmin) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+            </li>
+        <% } %>
+        <% if (!isAuthenticated) { %>
             <li class="mobile-nav__item">
                 <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
             </li>
             <li class="mobile-nav__item">
                 <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
             </li>
-        <!-- <% } else { %>
+        <% } else { %>
             <li class="mobile-nav__item">
-                <form action="/logout" method="post">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <form action="/logout" method="POST">
                     <button type="submit">Logout</button>
                 </form>
             </li>
-        <% } %> -->
+        <% } %>
     </ul>
 </nav>
