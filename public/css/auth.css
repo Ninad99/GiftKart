@@ -6,10 +6,6 @@
   padding: 1.5rem 2.5rem;
 }
 
-.login-form .login-form-header {
-  font-size: 1.75rem;
-}
-
 .signup-form {
   width: 25rem;
   max-width: 90%;
@@ -18,6 +14,12 @@
   padding: 1.5rem 2.5rem;
 }
 
-.signup-form .signup-form-header {
-  font-size: 1.75rem;
+@media screen and (max-width: 768px) {
+  .login-form {
+    padding: .5rem;
+  }
+
+  .signup-form {
+    padding: .5rem;
+  }
 }
