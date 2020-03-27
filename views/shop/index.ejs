@@ -1,11 +1,42 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/product.css">
+
 </head>
 
 <body>
-    <%- include('../includes/navigation.ejs') %>
-    
-    <main>
-      Index page
-    </main>
-<%- include('../includes/end.ejs') %>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main class="centered">
+    <h1>Welcome to GiftKart!</h1>
+    <h3>Add Some info so we can help pick you the right gift your loved ones</h3>
+    <!-- make a route for this actuon -->
+    <form class="product-form" action="/recommend-products" method="POST">
+      <div>
+        <label for="Age">Age: </label>
+        <select id="Age-select" name="Age">
+          <option value="1">1-10</option>
+          <option value="10">10-20</option>
+          <option value="20">20-30</option>
+          <option value="30">30-40</option>
+          <option value="40">40+</option>
+        </select>
+        years
+      </div>
+      <div>
+        <label for="gender">Gender: </label>
+        <select id="gender-select" name="gender">
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+
+      </div>
+      <div>
+        <label>Age: </label><input type="number" name="age" />
+      </div>
+      <div>
+        <label>Age: </label><input type="text" name="gg" />
+      </div>
+      <input type="submit" />
+    </form>
+  </main>
+  <%- include('../includes/end.ejs') %>
