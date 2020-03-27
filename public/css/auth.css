@@ -1,0 +1,23 @@
+.login-form {
+  width: 25rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+  padding: 1.5rem 2.5rem;
+}
+
+.login-form .login-form-header {
+  font-size: 1.75rem;
+}
+
+.signup-form {
+  width: 25rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+  padding: 1.5rem 2.5rem;
+}
+
+.signup-form .signup-form-header {
+  font-size: 1.75rem;
+}
