@@ -22,4 +22,8 @@ router.get('/products/:productId', shopController.getProduct);
 
 // /create-order -> POST
 
+// /recommend-products -> POST 
+router.post("/recommend-products", shopController.postRecommendProducts);
+
+
 module.exports = router;
