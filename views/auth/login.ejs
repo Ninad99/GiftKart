@@ -8,8 +8,8 @@
   <%- include('../includes/navigation.ejs') %>
 
   <main>
+    <p class="page-header centered"><strong>GiftKart</strong> | Login</p>
     <form class="login-form" action="/login" method="POST">
-      <p class="login-form-header"><strong>GiftKart</strong> | Login</p>
       <% if (errorMessage) { %>
           <div class="user-message user-message--error"><%= errorMessage %></div>
       <% } %>

@@ -6,30 +6,30 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
   <main>
+    <p class="page-header centered"><strong>GiftKart</strong> Admin | Add Product</p>
     <form class="signup-form" action="/admin/add-product" method="POST">
-      <p class="signup-form-header"><strong>GiftKart</strong> | Add Product</p>
       <% if (errorMessage) { %>
       <div class="user-message user-message--success"><%= errorMessage %></div>
       <% } %>
 
       <div class="form-control">
-        <label for="imageUrl">ImageUrl</label>
-        <input type="imageUrl" name="imageUrl" id="imageUrl">
-      </div>
-
-      <div class="form-control">
         <label for="title">Title</label>
         <input type="title" name="title" id="title" placeholder="Enter the name of your prouduct">
       </div>
-
-      <div class="form-control">
-        <label for="description">Description</label>
-        <input type="description" name="description" id="description">
-      </div>
-
+      
       <div class="form-control">
         <label for="price">Price</label>
         <input type="number" name="price" id="price">
+      </div>
+      
+      <div class="form-control">
+        <label for="imageUrl">ImageUrl</label>
+        <input type="imageUrl" name="imageUrl" id="imageUrl">
+      </div>
+      
+      <div class="form-control">
+        <label for="description">Description</label>
+        <textarea type="description" name="description" id="description" rows="7"></textarea>
       </div>
 
       <div class="form-control">
@@ -55,7 +55,7 @@
           <option value="30">30</option>
           <option value="40">40+</option>
         </select>
-         Years
+        Years
       </div>
 
       <div  class="form-control">
@@ -66,7 +66,7 @@
           <option value="30">30</option>
           <option value="40">40+</option>
         </select>
-         Years
+        Years
       </div>
 
       <div class="form-control">
