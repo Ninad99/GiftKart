@@ -48,6 +48,16 @@ exports.postAdminLogin = (req, res, next) => {
         .catch(err => {
           console.log(err);
         })
+      } else {
+        return res.status(400).render('admin/admin-login', {
+          pageTitle: 'Admin Login',
+          path: '/admin/login',
+          errorMessage: 'Invalid admin email or password',
+          oldInput: {
+            email: email,
+            password: password
+          }
+        });
       }
   })
 }
