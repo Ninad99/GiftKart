@@ -31,3 +31,44 @@ exports.getProduct = (req, res, next) => {
     })
     .catch(err => console.log(err)); 
 }
+
+exports.getCart = (req, res, next) => {
+  req.user
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+      console.log(user.cart.items);
+      const totalAmount = user.cart.items.reduce((acc, curr) => {
+        return (curr.quantity * curr.productId.price) + acc;
+      }, 0);
+      console.log(totalAmount);
+      res.render('shop/cart', {
+        pageTitle: 'Your Cart',
+        path: '/cart',
+        products: user.cart.items,
+        totalAmount: totalAmount
+      });
+    })
+    .catch(err => console.log(err));
+}
+
+exports.postCart = (req, res, next) => {
+  const prodID = req.body.productId;
+  Product.findById(prodID)
+    .then(product => {
+      return req.user.addToCart(product);
+    })
+    .then(result => {
+        res.redirect('/cart');
+    })
+    .catch(err => console.log(err))
+}
+
+exports.postCartDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  req.user.removeFromCart(prodId)
+    .then(result => {
+      res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+}
