@@ -1,0 +1,22 @@
+.cart-list {
+  list-style: none;
+  padding: 0;
+  margin: auto;
+}
+
+.cart-list .cart-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  border: 1px solid #C5CAE9;
+  border-radius: 4px;
+  margin: .5rem 0;
+}
+
+.cart-list .cart-list-item .cart-list-item--info h3 h5 {
+  color: #212121;
+}
+.cart-list .cart-list-item .cart-list-item--info h4 {
+  color: #757575;
+}
