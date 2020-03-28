@@ -37,13 +37,11 @@ exports.getCart = (req, res, next) => {
     .populate('cart.items.productId')
     .execPopulate()
     .then(user => {
-      console.log(user.cart.items);
       const totalAmount = user.cart.items.reduce((acc, curr) => {
         return (curr.quantity * curr.productId.price) + acc;
       }, 0);
-      console.log(totalAmount);
       res.render('shop/cart', {
-        pageTitle: 'Your Cart',
+        pageTitle: 'GiftKart | Your Cart',
         path: '/cart',
         products: user.cart.items,
         totalAmount: totalAmount
@@ -82,7 +80,7 @@ exports.postRecommendProducts = (req, res, next) => {
 		.then(products => {
 			return res.render("shop/recommend-products", {
 				prods: products,
-				pageTitle: "Recommend Products",
+				pageTitle: "GiftKart | Recommended Products",
 				path: "/recommend-products"
 			});
 		})
