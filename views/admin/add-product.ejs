@@ -8,33 +8,46 @@
   <main>
     <p class="page-header centered"><strong>GiftKart</strong> Admin | Add Product</p>
     <form class="signup-form" action="/admin/add-product" method="POST">
-      <% if (errorMessage) { %>
-      <div class="user-message user-message--success"><%= errorMessage %></div>
+      <% if (message && !hasError) { %>
+      <div class="user-message"><%= message %></div>
+      <% } %>
+      <% if (message && hasError) { %>
+        <div class="user-message user-message--error"><%= message %></div>
       <% } %>
 
       <div class="form-control">
         <label for="title">Title</label>
-        <input type="title" name="title" id="title" placeholder="Enter the name of your prouduct">
+        <input
+          class="<%= validationErrors.find(e => e.param === 'title') ? 'invalid' : '' %>"
+          type="text" name="title" id="title" value="<%= oldInput.title %>">
       </div>
       
       <div class="form-control">
         <label for="price">Price</label>
-        <input type="number" name="price" id="price">
+        <input 
+          class="<%= validationErrors.find(e => e.param === 'price') ? 'invalid' : '' %>"
+          type="number" name="price" id="price" value="<%= oldInput.price %>">
       </div>
       
       <div class="form-control">
         <label for="imageUrl">ImageUrl</label>
-        <input type="imageUrl" name="imageUrl" id="imageUrl">
+        <input
+          class="<%= validationErrors.find(e => e.param === 'imageUrl') ? 'invalid' : '' %>"
+          type="text" name="imageUrl" id="imageUrl" value="<%= oldInput.imageUrl %>">
       </div>
       
       <div class="form-control">
         <label for="description">Description</label>
-        <textarea type="description" name="description" id="description" rows="7"></textarea>
+        <textarea 
+          class="<%= validationErrors.find(e => e.param === 'description') ? 'invalid' : '' %>"
+          type="text" name="description" id="description" rows="7"><%= oldInput.description %></textarea>
       </div>
 
       <div class="form-control">
         <label for="category">Category </label>
-        <select id="category-select" name="category" id="category" required>
+        <select 
+          class="<%= validationErrors.find(e => e.param === 'category') ? 'invalid' : '' %>"
+          id="category-select" name="category" id="category" value="<%= oldInput.category %>">
           <option value="card">Card</option>
           <option value="frame">Frame</option>
           <option value="others">Others</option>
@@ -43,12 +56,16 @@
 
       <div class="form-control">
         <label for="quantity">Quantity</label>
-        <input type="number" name="quantity" id="quantity">
+        <input
+          class="<%= validationErrors.find(e => e.param === 'quantity') ? 'invalid' : '' %>"
+          type="number" name="quantity" id="quantity" value="<%= oldInput.quantity %>">
       </div>
 
       <div  class="form-control">
         <label for="minage">Minimum age</label>
-        <select id="minage-select" name="minage" id="minage">
+        <select
+          class="<%= validationErrors.find(e => e.param === 'minage') ? 'invalid' : '' %>"
+          id="minage-select" name="minage" id="minage" value="<%= oldInput.minage %>">
           <option value="1">1</option>
           <option value="10">10</option>
           <option value="20">20</option>
@@ -60,7 +77,9 @@
 
       <div  class="form-control">
         <label for="maxage">Maximum age</label>
-        <select id="maxage-select" name="maxage" id="maxage">
+        <select
+          class="<%= validationErrors.find(e => e.param === 'maxage') ? 'invalid' : '' %>"
+          id="maxage-select" name="maxage" id="maxage" value="<%= oldInput.maxage %>">
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
@@ -70,24 +89,28 @@
       </div>
 
       <div class="form-control">
-        <label for="occasion">Occasion </label>
-        <select id="occasion-select" name="occasion" required>
+        <label for="occasion">Occasion</label>
+        <select
+          class="<%= validationErrors.find(e => e.param === 'occasion') ? 'invalid' : '' %>"
+          id="occasion-select" name="occasion" value="<%= oldInput.occasion %>" required>
           <option value="marriage">Marriage</option>
-          <option value="bithday">Bithday</option>
+          <option value="bithday">Birthday</option>
           <option value="other">Other</option>
         </select>
       </div>
 
       <div class="form-control">
         <label for="gender">Gender: </label>
-        <select id="gender-select" name="gender">
+        <select
+          class="<%= validationErrors.find(e => e.param === 'gender') ? 'invalid' : '' %>"
+          id="gender-select" name="gender" value="<%= oldInput.gender %>">
           <option value="M">Male</option>
           <option value="F">Female</option>
           <option value="B">Both</option>
         </select>
       </div>
 
-      <button class=" btn" type="submit">Submit</button>
+      <button class="btn" type="submit">Submit</button>
     </form>
   </main>
   <%- include('../includes/end.ejs') %>

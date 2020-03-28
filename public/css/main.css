@@ -269,7 +269,7 @@ form {
 
 .user-message--error {
   border-color: red;
-  background: rgb(255, 176, 176);
+  background: rgba(255, 176, 176, .7);
   color: red;
 }
 

@@ -1,4 +1,6 @@
 const bcrypt = require("bcrypt");
+const { validationResult } = require('express-validator');
+
 const Admin = require("../models/admin");
 const Product = require("../models/product");
 
@@ -6,16 +8,30 @@ exports.getUploadProduct = (req, res, next) => {
 	return res.render("admin/add-product", {
 		pageTitle: "GiftKart Admin | Add Product",
 		path: "/admin/add-product",
-		errorMessage: null,
+		message: null,
+		hasError: false,
 		oldInput: {
-			email: "",
-			password: ""
-		}
+			title: '',
+			price: '',
+			description: '',
+			imageUrl: '',
+			category: '',
+			quantity: '',
+			ages: {
+				min: '',
+				max: ''
+			},
+			gender: '',
+			occasion: ''
+		},
+		validationErrors: []
 	});
 };
 
 exports.postUploadProduct = async (req, res, next) => {
-	const prod = {
+	const errors = validationResult(req);
+
+	const newProduct = {
 		title: req.body.title,
 		price:  parseInt(req.body.price),
 		description: req.body.description,
@@ -30,21 +46,51 @@ exports.postUploadProduct = async (req, res, next) => {
 		occasion: req.body.occasion
 	};
 
-	let errorMessage = null;
-
-	try {
-		const product = await new Product(prod);
-		await product.save();
-		errorMessage = "Product Added successfully";
-	} catch (e) {
-		errorMessage = "error";
+	if (!errors.isEmpty()) {
+		return res.status(422).render('admin/add-product', {
+			pageTitle: 'GiftKart Admin | Add Product',
+			path: '/admin/add-product',
+			hasError: true,
+			message: errors.array()[0].msg,
+			oldInput: newProduct,
+			validationErrors: errors.array()
+		});
 	}
 
-	return res.status(200).render("admin/add-product", {
-		pageTitle: "GiftKart Admin | Add Product",
-		path: "/admin/add-product",
-		errorMessage: errorMessage
-	});
+	try {
+		const product = await new Product(newProduct);
+		await product.save();
+		return res.render('admin/add-product', {
+			pageTitle: 'GiftKart Admin | Add Product',
+			path: '/admin/add-product',
+			hasError: false,
+			message: 'Successfully added product!',
+			oldInput: {
+				title: '',
+				price: '',
+				imageUrl: '',
+				description: '',
+				category: '',
+				quantity: '',
+				ages: {
+					min: '',
+					max: ''
+				},
+				gender: '',
+				occasion: ''
+			},
+			validationErrors: []
+		})
+	} catch (err) {
+		return res.render('admin/add-product', {
+			pageTitle: 'GiftKart Admin | Add Product',
+			path: '/admin/add-product',
+			hasError: true,
+			message: 'There was an error while saving the product. Check your network connection and retry.',
+			oldInput: newProduct,
+			validationErrors: []
+		})
+	}
 };
 
 exports.getAdminLogin = (req, res, next) => {
