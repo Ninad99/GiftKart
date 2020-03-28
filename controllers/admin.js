@@ -4,8 +4,8 @@ const Product = require("../models/product");
 
 exports.getUploadProduct = (req, res, next) => {
 	return res.render("admin/add-product", {
-		pageTitle: "Admin Login",
-		path: "/admin/login",
+		pageTitle: "GiftKart Admin | Add Product",
+		path: "/admin/add-product",
 		errorMessage: null,
 		oldInput: {
 			email: "",
@@ -15,7 +15,6 @@ exports.getUploadProduct = (req, res, next) => {
 };
 
 exports.postUploadProduct = async (req, res, next) => {
-	
 	const prod = {
 		title: req.body.title,
 		price:  parseInt(req.body.price),
@@ -36,14 +35,13 @@ exports.postUploadProduct = async (req, res, next) => {
 	try {
 		const product = await new Product(prod);
 		await product.save();
-		console.log(prod);
 		errorMessage = "Product Added successfully";
 	} catch (e) {
 		errorMessage = "error";
 	}
 
 	return res.status(200).render("admin/add-product", {
-		pageTitle: "add-product",
+		pageTitle: "GiftKart Admin | Add Product",
 		path: "/admin/add-product",
 		errorMessage: errorMessage
 	});
@@ -109,3 +107,25 @@ exports.postAdminLogin = (req, res, next) => {
 		}
 	});
 };
+
+exports.getProducts = (req, res, next) => {
+	Product.find()
+		.then(products => {
+			res.render('admin/products', {
+				prods: products,
+				pageTitle: 'Admin Products',
+				path: '/admin/products'
+			});
+		})
+		.catch(err => console.log(err));
+}
+
+exports.postDeleteProduct = (req, res, next) => {
+	const prodId = req.body.productId;
+	Product.deleteOne({ _id: prodId })
+		.then(result => {
+			console.log('DELETED PRODUCT');
+			res.redirect('/admin/products');
+		})
+		.catch(err => console.log(err));
+}
