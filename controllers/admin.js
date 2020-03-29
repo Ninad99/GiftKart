@@ -8,8 +8,9 @@ exports.getUploadProduct = (req, res, next) => {
 	return res.render("admin/add-product", {
 		pageTitle: "GiftKart Admin | Add Product",
 		path: "/admin/add-product",
-		message: null,
+		editing: false,
 		hasError: false,
+		message: null,
 		oldInput: {
 			title: '',
 			price: '',
@@ -50,6 +51,7 @@ exports.postUploadProduct = async (req, res, next) => {
 		return res.status(422).render('admin/add-product', {
 			pageTitle: 'GiftKart Admin | Add Product',
 			path: '/admin/add-product',
+			editing: false,
 			hasError: true,
 			message: errors.array()[0].msg,
 			oldInput: newProduct,
@@ -63,6 +65,7 @@ exports.postUploadProduct = async (req, res, next) => {
 		return res.render('admin/add-product', {
 			pageTitle: 'GiftKart Admin | Add Product',
 			path: '/admin/add-product',
+			editing: false,
 			hasError: false,
 			message: 'Successfully added product!',
 			oldInput: {
@@ -85,6 +88,7 @@ exports.postUploadProduct = async (req, res, next) => {
 		return res.render('admin/add-product', {
 			pageTitle: 'GiftKart Admin | Add Product',
 			path: '/admin/add-product',
+			editing: false,
 			hasError: true,
 			message: 'There was an error while saving the product. Check your network connection and retry.',
 			oldInput: newProduct,
@@ -173,5 +177,85 @@ exports.postDeleteProduct = (req, res, next) => {
 			console.log('DELETED PRODUCT');
 			res.redirect('/admin/products');
 		})
+		.catch(err => console.log(err));
+}
+
+exports.getEditProduct = (req, res, next) => {
+	const editMode = req.query.edit;
+	if (!editMode) {
+		return res.redirect('/');
+	}
+	const productId = req.params.productId;
+	Product.findById(productId)
+		.then(product => {
+			if (!product) {
+					return res.redirect('/');
+			}
+			res.render('admin/add-product', {
+				pageTitle: 'Edit Product',
+				path: '/admin/edit-product',
+				editing: editMode,
+				hasError: false,
+				message: null,
+				oldInput: product,
+				validationErrors: []
+			});
+		})
+		.catch(err => console.log(err));
+}
+
+exports.postEditProduct = (req, res, next) => {
+	const prodId = req.body.productId;
+	const errors = validationResult(req);
+
+	const updatedProduct = {
+		title: req.body.title,
+		price:  parseInt(req.body.price),
+		description: req.body.description,
+		imageUrl: req.body.imageUrl,
+		category: req.body.category,
+		quantity: parseInt(req.body.quantity),
+		ages: {
+			min: parseInt(req.body.minage),
+			max: parseInt(req.body.maxage)
+		},
+		gender: req.body.gender,
+		occasion: req.body.occasion
+	};
+
+	if (!errors.isEmpty()) {
+		return res.status(422).render('admin/add-product', {
+			pageTitle: 'Edit Product',
+			path: '/admin/edit-product',
+			editing: false,
+			hasError: true,
+			oldInput: {
+				...updatedProduct,
+				_id: prodId
+			},
+			errorMessage: errors.array()[0].msg,
+			validationErrors: errors.array()
+		});
+	}
+
+	Product.findById(prodId)
+		.then(product => {
+			product.title = updatedProduct.title;
+			product.price = updatedProduct.price;
+			product.description = updatedProduct.description;
+			product.imageUrl = updatedProduct.imageUrl;
+			product.category = updatedProduct.category;
+			product.quantity = updatedProduct.quantity;
+			product.ages.min = updatedProduct.ages.min;
+			product.ages.max = updatedProduct.ages.max;
+			product.gender = updatedProduct.gender;
+			product.occasion = updatedProduct.occasion;
+
+			return product.save()
+				.then(result => {
+					console.log('updated product', result);
+					res.redirect('/admin/products');
+				})
+			})
 		.catch(err => console.log(err));
 }
