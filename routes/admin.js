@@ -34,8 +34,22 @@ router.post("/add-product",
 router.get("/products", isAdmin, adminController.getProducts);
 
 // /edit-product -> GET
+router.get('/edit-product/:productId', isAdmin, adminController.getEditProduct);
 
 // /edit-product -> POST
+router.post('/edit-product', 
+  [
+    body('title').isString().isLength({ min: 3 }).trim(),
+    body('price').isNumeric(),
+    body('imageUrl').isURL(),
+    body('description').isString().isLength({ min: 5, max: 500 }).trim(),
+    body('category').isString().trim(),
+    body('quantity').isNumeric().trim(),
+    body('minage').isNumeric(),
+    body('maxage').isNumeric(),
+    body('gender').isString().trim(),
+    body('occasion').isString().trim()
+  ], isAdmin, adminController.postEditProduct);
 
 // /delete-product -> POST
 router.post('/delete-product', isAdmin, adminController.postDeleteProduct);
