@@ -7,7 +7,7 @@
   <%- include('../includes/navigation.ejs') %>
   <main>
     <p class="page-header centered"><strong>GiftKart</strong> Admin | Add Product</p>
-    <form class="signup-form" action="/admin/add-product" method="POST">
+    <form class="signup-form" action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product <% } %>" method="POST">
       <% if (message && !hasError) { %>
       <div class="user-message"><%= message %></div>
       <% } %>
@@ -110,7 +110,16 @@
         </select>
       </div>
 
-      <button class="btn" type="submit">Submit</button>
+      <% if (editing) { %>
+        <input type="hidden" value="<%= oldInput._id %>" name="productId">
+      <% } %>
+      <button class="btn" type="submit">
+        <% if (editing) { %>
+          Update Product
+        <% } else { %>
+          Add Product
+        <% } %>
+      </button>
     </form>
   </main>
   <%- include('../includes/end.ejs') %>
