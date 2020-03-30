@@ -29,3 +29,24 @@
 .product__description {
   text-align: center;
 }
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  list-style: none;
+  padding: 0;
+}
+
+.orders-list__item {
+  padding: .5rem 1rem;
+  border: 1px solid #C5CAE9;
+  margin: .5rem 0;
+}
+
+@media screen and (max-width: 768px) {
+  .orders-list__item {
+    font-size: 87.5%;
+  }
+}
