@@ -26,3 +26,11 @@
 .form-control textarea.invalid {
   border-color: red;
 }
+
+.fa {
+  color:#C5CAE9;
+}
+
+.fa.active {
+  color: #303F9F;
+}
