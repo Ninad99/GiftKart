@@ -3,11 +3,21 @@
 }
 
 .form-control label,
-.form-control input,
-.form-control textarea {
+.form-control textarea,
+.form-control input {
   display: block;
   width: 100%;
   margin-bottom: 0.25rem;
+}
+
+.p-viewer, 
+.p-viewer2{
+  float: right;
+  margin-top: -25px;
+  margin-right: 10px;
+  position: relative;
+  z-index: 1;
+  cursor:pointer;
 }
 
 .form-control input,
@@ -25,4 +35,12 @@
 .form-control input.invalid,
 .form-control textarea.invalid {
   border-color: red;
+}
+
+.fa {
+  color:#C5CAE9;
+}
+
+.fa.active {
+  color: #303F9F;
 }
