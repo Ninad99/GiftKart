@@ -25,13 +25,15 @@
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <i class="fa fa-eye" onclick="togglePasswordVisibility()" id="eye" ></i>
-				<input 
+        <input 
 					class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" 
           type="password"
           name="password" 
           id="password" 
           value="<%= oldInput.password %>">
+          <span class="p-viewer">
+            <i class="fa fa-eye" onclick="togglePasswordVisibility()" id="eye" ></i>
+          </span>
       </div>
       <button style="margin-right: 1rem;" class="btn" type="submit">Login</button>
       <a href="/admin/login" class="btn" type="submit">Admin Login</a>

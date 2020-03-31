@@ -1,6 +1,7 @@
 <%- include('../includes/head.ejs') %>
   <link rel="stylesheet" href="/css/forms.css">
   <link rel="stylesheet" href="/css/auth.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -27,8 +28,26 @@
           name="password"
           id="password"
           value="<%= oldInput.password %>">
+          <span class="p-viewer">
+            <i class="fa fa-eye" onclick="togglePasswordVisibility()" id="eye" ></i>
+          </span>
       </div>
       <button style="margin-bottom: 1rem;" class="btn" type="submit">Login as Admin</button>
     </form>
   </main>
+  <script>
+    var eye = document.getElementById('eye');
+
+    const togglePasswordVisibility = () => {
+
+      eye.classList.toggle('active');
+
+      let x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
 <%- include('../includes/end.ejs') %>
