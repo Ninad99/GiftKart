@@ -35,16 +35,18 @@ exports.postUploadProduct = async (req, res, next) => {
 	let occasionArr = [];
 	let categoryArr = [];
 
-	if(req.body.occasion.length > 1){
-		occasionArr = req.body.occasion;
-	}else{
-		occasionArr.push(req.body.occasion);
+	if(req.body.occasion){
+		if(req.body.occasion.length > 1)
+			occasionArr = req.body.occasion;
+		else
+			occasionArr.push(req.body.occasion);
 	}
-
-	if(req.body.category.length > 1){
-		categoryArr = req.body.category;
-	}else{
-		categoryArr.push(req.body.category);
+	
+	if(req.body.category){
+		if(req.body.category.length > 1)
+			categoryArr = req.body.category;
+		else
+			categoryArr.push(req.body.category);
 	}
 	
 	const newProduct = {
