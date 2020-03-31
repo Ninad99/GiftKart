@@ -44,14 +44,31 @@
       </div>
 
       <div class="form-control">
-        <label for="category">Category </label>
-        <select 
-          class="<%= validationErrors.find(e => e.param === 'category') ? 'invalid' : '' %>"
-          id="category-select" name="category" id="category" value="<%= oldInput.category %>">
-          <option value="card">Card</option>
-          <option value="frame">Frame</option>
-          <option value="others">Others</option>
-        </select>
+        <label for="category">Category</label>
+        <div class="form-control">
+          <label class="check-box-container">Card
+            <input type="checkbox" id="category-card" name="category" value="card">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Frame
+          <input type="checkbox" id="category-frame" name="category" value="frame">
+          <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Other
+            <input type="checkbox" id="category-other" name="category" value="other">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Add more categories
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
       </div>
 
       <div class="form-control">
@@ -61,42 +78,66 @@
           type="number" name="quantity" id="quantity" value="<%= oldInput.quantity %>">
       </div>
 
-      <div  class="form-control">
+      <div id="minage" class="form-control">
         <label for="minage">Minimum age</label>
         <select
           class="<%= validationErrors.find(e => e.param === 'minage') ? 'invalid' : '' %>"
-          id="minage-select" name="minage" id="minage" value="<%= oldInput.minage %>">
+          id="minage-select" 
+          name="minage" 
+          id="minage" 
+          value="<%= oldInput.minage %>">
+          <option value="0" >Select Minimum Age</option>
           <option value="1">1</option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
           <option value="40">40+</option>
         </select>
-        Years
       </div>
 
-      <div  class="form-control">
+      <div id="maxage" class="form-control">
         <label for="maxage">Maximum age</label>
         <select
           class="<%= validationErrors.find(e => e.param === 'maxage') ? 'invalid' : '' %>"
-          id="maxage-select" name="maxage" id="maxage" value="<%= oldInput.maxage %>">
+          id="maxage-select" 
+          name="maxage" 
+          id="maxage" 
+          value="<%= oldInput.maxage %>"
+          required >
+          <option value="0">Select Maximum Age</option>
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
           <option value="40">40+</option>
         </select>
-        Years
       </div>
 
       <div class="form-control">
         <label for="occasion">Occasion</label>
-        <select
-          class="<%= validationErrors.find(e => e.param === 'occasion') ? 'invalid' : '' %>"
-          id="occasion-select" name="occasion" value="<%= oldInput.occasion %>" required>
-          <option value="marriage">Marriage</option>
-          <option value="bithday">Birthday</option>
-          <option value="other">Other</option>
-        </select>
+        <div class="form-control">
+          <label class="check-box-container">Marriage
+            <input type="checkbox" id="occasion-marriage" name="occasion" value="marriage">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Bithday
+          <input type="checkbox" id="occasion-bithday" name="occasion" value="bithday">
+          <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Other
+            <input type="checkbox" id="occasion-other" name="occasion" value="other">
+            <span class="checkmark"></span>
+          </label>
+        </div>
+        <div class="form-control">
+          <label class="check-box-container">Add more occasions
+            <input type="checkbox">
+            <span class="checkmark"></span>
+          </label>
+        </div>
       </div>
 
       <div class="form-control">

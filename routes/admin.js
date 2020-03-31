@@ -22,12 +22,12 @@ router.post("/add-product",
     body('price').isNumeric(),
     body('imageUrl').isURL(),
     body('description').isString().isLength({ min: 5, max: 500 }).trim(),
-    body('category').isString().trim(),
-    body('quantity').isNumeric().trim(),
+    // body('category').isArray().isLength({min:1}),
+    body('quantity').isString().trim(),
     body('minage').isNumeric(),
     body('maxage').isNumeric(),
     body('gender').isString().trim(),
-    body('occasion').isString().trim()
+    // body('occasion').isArray().isLength({min:1})
   ], isAdmin, adminController.postUploadProduct);
 
 // /products -> GET
@@ -43,12 +43,12 @@ router.post('/edit-product',
     body('price').isNumeric(),
     body('imageUrl').isURL(),
     body('description').isString().isLength({ min: 5, max: 500 }).trim(),
-    body('category').isString().trim(),
+    body('category').isArray().isLength({min:1}),
     body('quantity').isNumeric().trim(),
     body('minage').isNumeric(),
     body('maxage').isNumeric(),
     body('gender').isString().trim(),
-    body('occasion').isString().trim()
+    body('occasion').isArray().isLength({min:1})
   ], isAdmin, adminController.postEditProduct);
 
 // /delete-product -> POST

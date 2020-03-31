@@ -32,19 +32,34 @@ exports.getUploadProduct = (req, res, next) => {
 exports.postUploadProduct = async (req, res, next) => {
 	const errors = validationResult(req);
 
+	let occasionArr = [];
+	let categoryArr = [];
+
+	if(req.body.occasion.length > 1){
+		occasionArr = req.body.occasion;
+	}else{
+		occasionArr.push(req.body.occasion);
+	}
+
+	if(req.body.category.length > 1){
+		categoryArr = req.body.category;
+	}else{
+		categoryArr.push(req.body.category);
+	}
+	
 	const newProduct = {
 		title: req.body.title,
 		price:  parseInt(req.body.price),
 		description: req.body.description,
 		imageUrl: req.body.imageUrl,
-		category: req.body.category,
+		category: categoryArr,
 		quantity: parseInt(req.body.quantity),
 		ages: {
 			min: parseInt(req.body.minage),
 			max: parseInt(req.body.maxage)
 		},
 		gender: req.body.gender,
-		occasion: req.body.occasion
+		occasion: occasionArr
 	};
 
 	if (!errors.isEmpty()) {
@@ -62,6 +77,7 @@ exports.postUploadProduct = async (req, res, next) => {
 	try {
 		const product = await new Product(newProduct);
 		await product.save();
+		
 		return res.render('admin/add-product', {
 			pageTitle: 'GiftKart Admin | Add Product',
 			path: '/admin/add-product',
