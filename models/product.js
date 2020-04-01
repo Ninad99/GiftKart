@@ -22,7 +22,7 @@ const productSchema = new Schema({
 		required: true
 	},
 	category: {
-		type: String,
+		type: [String],
 		trim: true,
 		required: true
 	},
@@ -40,7 +40,7 @@ const productSchema = new Schema({
 		required: true
 	},
 	occasion: {
-		type: String,
+		type: [String],
 		trim: true,
 		required: true
 	}
