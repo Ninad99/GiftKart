@@ -22,13 +22,31 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productId;
+
   Product.findById(prodID)
     .then(product => {
-      return res.render('shop/product-detail', {
-        product: product,
-        pageTitle: `View Product | ${product.title}`,
-        path: '/products'
-      });
+      let SimilarProductsQuery = {};
+
+      SimilarProductsQuery.gender = product.gender;
+      SimilarProductsQuery.category = product.category;
+      SimilarProductsQuery.occasion = product.occasion;
+
+      Product.find(SimilarProductsQuery)
+        .then(similarProducts => {
+        for(let i in similarProducts){
+          // if(similarProducts[i]._id !== product._id){ // this line does't work thefuck ?
+          if(similarProducts[i].id === product.id){
+            similarProducts.splice(i);
+          }
+        }
+        return res.render('shop/product-detail', {
+          product: product,
+          similarProducts: similarProducts,
+          pageTitle: `View Product | ${product.title}`,
+          path: '/products'
+        });
+      })
+      .catch(err => console.log(err));
     })
     .catch(err => console.log(err)); 
 }

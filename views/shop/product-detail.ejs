@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
@@ -13,9 +13,36 @@
         </div>
         <h2>&#8377; <%= product.price %></h2>
         <p><%= product.description %></p>
+        <hr>
+        <% if (similarProducts.length > 0) { %>
+        <h1>Similar Products</h1>
+        <div class="grid">
+            <% for (let similarProduct of similarProducts) { %>
+            <article class="card product-item">
+                <header class="card__header">
+                    <h1 class="product__title"><%= similarProduct.title %></h1>
+                </header>
+                <div class="card__image">
+                    <img src="<%= similarProduct.imageUrl %>" alt="<%= similarProduct.title %>">
+                </div>
+                <div class="card__content">
+                    <h3 class="product__price">&#8377; <%= similarProduct.price %></h3>
+                </div>
+                <div class="card__actions">
+                    <a href="/products/<%= similarProduct._id %>" class="btn">Details</a>
+                    <% if (isAuthenticated && !isAdmin) { %>
+                    <%- include('../includes/add-to-cart.ejs', { product: product }) %>
+                    <% } %>
+                </div>
+            </article>
+            <% } %>
+        </div>
+        <% } else { %>
+        <h1>No Similar products found!</h1>
+        <% } %>
         <% if (isAuthenticated && !isAdmin) { %>
-            <%- include('../includes/add-to-cart.ejs', { product: product }) %>
+        <%- include('../includes/add-to-cart.ejs', { product: product }) %>
         <% } %>
     </main>
 
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>
