@@ -22,13 +22,31 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productId;
+
   Product.findById(prodID)
     .then(product => {
-      return res.render('shop/product-detail', {
-        product: product,
-        pageTitle: `View Product | ${product.title}`,
-        path: '/products'
-      });
+      let SimilarProductsQuery = {};
+
+      SimilarProductsQuery.gender = product.gender;
+      SimilarProductsQuery.category = product.category;
+      SimilarProductsQuery.occasion = product.occasion;
+
+      Product.find(SimilarProductsQuery)
+        .then(similarProducts => {
+        for(let i in similarProducts){
+          // if(similarProducts[i]._id !== product._id){ // this line does't work thefuck ?
+          if(similarProducts[i].id === product.id){
+            similarProducts.splice(i);
+          }
+        }
+        return res.render('shop/product-detail', {
+          product: product,
+          similarProducts: similarProducts,
+          pageTitle: `View Product | ${product.title}`,
+          path: '/products'
+        });
+      })
+      .catch(err => console.log(err));
     })
     .catch(err => console.log(err)); 
 }
@@ -124,10 +142,47 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.postRecommendProducts = (req, res, next) => {
-	console.log(req.body);
-	//handle further
+  let query = {} ;
 
-	Product.find()
+  //code to handle ages
+  if(req.body.maxage !== '0'){
+    query["ages.max"] = req.body.maxage
+  }
+  if(req.body.minage !== '0'){
+    query["ages.min"] = req.body.minage
+  }
+  console.log(query)
+  // code to handle occasions
+  if(req.body.occasion) {
+    if(Array.isArray(req.body.occasion)) {
+      let QueryOccasions = [];
+      for(let i in req.body.occasion) {
+        QueryOccasions.push(req.body.occasion[i]);
+      }
+      query.occasion = QueryOccasions;
+    } else {
+      query.occasion =  req.body.occasion;
+    } 
+  }
+
+  // code to handle price
+  if(req.body.minprice && req.body.maxprice) {
+    query.price = { $gt: req.body.minprice, $lt: req.body.maxprice};
+  }
+  else if(req.body.minprice) {
+    query.price = { $gt: req.body.minprice};
+  }
+  else if(req.body.maxprice){
+    query.price = { $lt: req.body.maxprice};
+  }
+
+  // code to handle gender
+  if(req.body.gender){
+    let queryGender = [req.body.gender, 'B'];
+    query.gender = queryGender;
+  }
+
+	Product.find(query)
 		.then(products => {
 			return res.render("shop/recommend-products", {
 				prods: products,

@@ -57,12 +57,26 @@ router.post('/edit-product',
     body('price').isNumeric(),
     body('imageUrl').isURL(),
     body('description').isString().isLength({ min: 5, max: 500 }).trim(),
-    body('category').isArray().isLength({min:1}),
+    body('category').custom( value => {
+      if(!value) throw new Error("Category can not be empty");
+
+      if( Array.isArray(value) && value.length > 0 )
+        return true;
+      else
+        if(value.length > 0)return true;
+    }),
     body('quantity').isNumeric().trim(),
     body('minage').isNumeric(),
     body('maxage').isNumeric(),
     body('gender').isString().trim(),
-    body('occasion').isArray().isLength({min:1})
+    body('occasion').custom( value => {
+      if(!value) throw new Error("Occasion can not be empty");
+
+      if( Array.isArray(value) && value.length > 0 )
+        return true;
+      else
+        if(value.length > 0)return true;
+    }),
   ], isAdmin, adminController.postEditProduct);
 
 // /delete-product -> POST
