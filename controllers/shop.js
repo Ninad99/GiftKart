@@ -142,24 +142,16 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.postRecommendProducts = (req, res, next) => {
-  let query;
+  let query = {} ;
 
-  // code to handle ages
-  if(req.body.minage !== '0'){
-    if(req.body.maxage !== '0'){
-      query = {
-        'ages.min' : req.body.minage,
-        'ages.max' : req.body.maxage
-      }
-    }else{
-      query = {
-        'ages.min' : req.body.minage
-      }
-    }
-  }else{
-    query = {};
+  //code to handle ages
+  if(req.body.maxage !== '0'){
+    query["ages.max"] = req.body.maxage
   }
-
+  if(req.body.minage !== '0'){
+    query["ages.min"] = req.body.minage
+  }
+  console.log(query)
   // code to handle occasions
   if(req.body.occasion) {
     if(Array.isArray(req.body.occasion)) {
