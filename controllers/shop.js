@@ -22,31 +22,28 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productId;
+  let fetchedProduct;
 
   Product.findById(prodID)
     .then(product => {
-      let SimilarProductsQuery = {};
-
-      SimilarProductsQuery.gender = product.gender;
-      SimilarProductsQuery.category = product.category;
-      SimilarProductsQuery.occasion = product.occasion;
-
-      Product.find(SimilarProductsQuery)
-        .then(similarProducts => {
-        for(let i in similarProducts){
-          // if(similarProducts[i]._id !== product._id){ // this line does't work thefuck ?
-          if(similarProducts[i].id === product.id){
-            similarProducts.splice(i);
-          }
-        }
-        return res.render('shop/product-detail', {
-          product: product,
-          similarProducts: similarProducts,
-          pageTitle: `View Product | ${product.title}`,
-          path: '/products'
-        });
-      })
-      .catch(err => console.log(err));
+      fetchedProduct = product;
+      const similarProductsQuery = {
+        gender: product.gender,
+        category: product.category,
+        occasion: product.occasion
+      };
+      return Product.find(similarProductsQuery);
+    })
+    .then(similarProducts => {
+      console.log('fetched product', fetchedProduct)
+      similarProducts = similarProducts.filter(prod => prod._id.toString() !== prodID.toString());
+      console.log('similar products', similarProducts);
+      return res.render('shop/product-detail', {
+        product: fetchedProduct,
+        similarProducts: similarProducts,
+        pageTitle: `View Product | ${fetchedProduct.title}`,
+        path: '/products'
+      });
     })
     .catch(err => console.log(err)); 
 }
