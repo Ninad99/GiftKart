@@ -1,0 +1,79 @@
+<p class="page-header centered"><strong>GiftKart</strong> | Apply Filters</p>
+<form class="signup-form" action="/recommend-products" method="POST">
+  <div id="minage" class="form-control">
+    <label for="minage">Minimum age</label>
+    <select id="minage-select" name="minage" id="minage">
+      <option value="0">Select Minimum Age</option>
+      <option value="1">1</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+      <option value="40">40+</option>
+    </select>
+  </div>
+
+  <div id="maxage" class="form-control">
+    <label for="maxage">Maximum age</label>
+    <select id="maxage-select" name="maxage" id="maxage">
+      <option value="0">Select Maximum Age</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="30">30</option>
+      <option value="40">40+</option>
+    </select>
+  </div>
+
+  <div class="form-control">
+    <label for="gender">Gender: </label>
+    <div class="form-control">
+      <label class="check-box-container">Male
+        <input type="checkbox" id="gender-Male" name="gender" value="M">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="check-box-container">Female
+        <input type="checkbox" id="gender-female" name="gender" value="F">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="check-box-container">Unisex
+        <input type="checkbox" id="gender-both" name="gender" value="B">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="form-control">
+    <label for="minprice">Minimum Price</label>
+    <input type="number" name="minprice" id="minprice">
+  </div>
+  <div class="form-control">
+    <label for="maxprice">Maximum Price</label>
+    <input type="number" name="maxprice" id="maxprice">
+  </div>
+
+  <div class="form-control">
+    <label for="occasion">Occasion</label>
+    <div class="form-control">
+      <label class="check-box-container">Marriage
+        <input type="checkbox" id="occasion-marriage" name="occasion" value="marriage">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="check-box-container">Bithday
+        <input type="checkbox" id="occasion-bithday" name="occasion" value="bithday">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="form-control">
+      <label class="check-box-container">Other
+        <input type="checkbox" id="occasion-other" name="occasion" value="other">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+  </div>
+  <button class=" btn" type="submit">Submit</button>
+</form>

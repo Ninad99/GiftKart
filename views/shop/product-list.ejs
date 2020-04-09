@@ -1,37 +1,84 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/auth.css">
 </head>
 
 <body>
-    <%- include('../includes/navigation.ejs') %>
+	<%- include('../includes/navigation.ejs') %>
+	<main>
+		<!-- this is whole page -->
+		<div style="display: flex;">
 
-    <main>
-        <% if (prods.length > 0) { %>
-            <div class="grid">
-                <% for (let product of prods) { %>
-                    <article class="card product-item">
-                        <header class="card__header">
-                            <h1 class="product__title"><%= product.title %></h1>
-                        </header>
-                        <div class="card__image">
-                            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-                        </div>
-                        <div class="card__content">
-                            <h3 class="product__price">&#8377; <%= product.price %></h3>
-                            <p class="product__description"><%= product.description %></p>
-                        </div>
-                        <div class="card__actions">
-                            <a href="/products/<%= product._id %>" class="btn">Details</a>
-                            <% if (isAuthenticated && !isAdmin) { %>
-                                <%- include('../includes/add-to-cart.ejs', { product: product }) %>
-                            <% } %>
-                        </div>
-                    </article>
-                <% } %>
-            </div>
-        <% } else { %>
-            <h1>No products found!</h1>
-        <% } %>
-    </main>
-    
-<%- include('../includes/end.ejs') %>
+			<!-- filter form  -->
+			<div class="side-form">
+
+				<!-- this is side form -->
+				<div style="width: 20vw;min-width: 300px;" class="filter-container" id="filter_container">
+					<%- include('../includes/filter-form.ejs') %>
+				</div>
+
+				<!-- this is modal -->
+				<div id="filter_container" class="modal-container">
+					<div id="modal_container" class="form-control">
+						<button id="modal-button" class="float">Apply Filter</button>
+						<div id="modal" class="modal">
+							<div class="modal-content">
+								<span class="close">&times;</span>
+								<%- include('../includes/filter-form.ejs') %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- this is rest products-page -->
+			<div>
+				<% if (prods.length > 0) { %>
+				<div class="grid">
+					<% for (let product of prods) { %>
+					<article class="card product-item">
+						<header class="card__header">
+							<h1 class="product__title"><%= product.title %></h1>
+						</header>
+						<div class="card__image">
+							<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+						</div>
+						<div class="card__content">
+							<h3 class="product__price">&#8377; <%= product.price %></h3>
+							<p class="product__description"><%= product.description %></p>
+						</div>
+						<div class="card__actions">
+							<a href="/products/<%= product._id %>" class="btn">Details</a>
+							<% if (isAuthenticated && !isAdmin) { %>
+							<%- include('../includes/add-to-cart.ejs', { product: product }) %>
+							<% } %>
+						</div>
+					</article>
+					<% } %>
+				</div>
+				<% } else { %>
+				<h1>No products found!</h1>
+				<% } %>
+			</div>
+		</div>
+	</main>
+	<script>
+		var modal = document.getElementById("modal");
+		var btn = document.getElementById("modal-button");
+		var span = document.getElementsByClassName("close")[0];
+
+		btn.onclick = function () {
+			modal.style.display = "block";
+		}
+
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+	</script>
+	<%- include('../includes/end.ejs') %>
