@@ -35,9 +35,7 @@ exports.getProduct = (req, res, next) => {
       return Product.find(similarProductsQuery);
     })
     .then(similarProducts => {
-      console.log('fetched product', fetchedProduct)
       similarProducts = similarProducts.filter(prod => prod._id.toString() !== prodID.toString());
-      console.log('similar products', similarProducts);
       return res.render('shop/product-detail', {
         product: fetchedProduct,
         similarProducts: similarProducts,
@@ -148,15 +146,11 @@ exports.postRecommendProducts = (req, res, next) => {
   if(req.body.minage !== '0'){
     query["ages.min"] = req.body.minage
   }
-  console.log(query)
+  
   // code to handle occasions
   if(req.body.occasion) {
     if(Array.isArray(req.body.occasion)) {
-      let QueryOccasions = [];
-      for(let i in req.body.occasion) {
-        QueryOccasions.push(req.body.occasion[i]);
-      }
-      query.occasion = QueryOccasions;
+      query.occasion = [...req.body.occasion];
     } else {
       query.occasion =  req.body.occasion;
     } 
@@ -179,6 +173,7 @@ exports.postRecommendProducts = (req, res, next) => {
     query.gender = queryGender;
   }
 
+  console.log('query', query);
 	Product.find(query)
 		.then(products => {
 			return res.render("shop/recommend-products", {
