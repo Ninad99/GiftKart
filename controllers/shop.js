@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 
@@ -62,7 +64,16 @@ exports.getCart = (req, res, next) => {
         pageTitle: 'GiftKart | Your Cart',
         path: '/cart',
         products: user.cart.items,
-        totalAmount: totalAmount
+        totalAmount: totalAmount,
+        oldInput: {
+          name: '',
+          house: '',
+          street: '',
+          city: '',
+          PIN: ''
+        },
+        errorMessage: null,
+        validationErrors: []
       });
     })
     .catch(err => console.log(err));
@@ -90,7 +101,38 @@ exports.postCartDeleteProduct = (req, res, next) => {
 }
 
 exports.postOrder = (req, res, next) => {
+  const { name, house, street, city, PIN } = req.body;
   const totalAmount = req.body.totalamount;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    req.user
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+      return res.status(422).render('shop/cart', {
+        pageTitle: 'GiftKart | Your Cart',
+        path: '/cart',
+        products: user.cart.items,
+        totalAmount: totalAmount,
+        oldInput: {
+          name: name,
+          house: house,
+          street: street,
+          city: city,
+          PIN: PIN
+        },
+        errorMessage: errors.array()[0].msg,
+        validationErrors: errors.array()
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return next(err);
+    })
+  }
+
   req.user.populate('cart.items.productId')
     .execPopulate()
     .then(user => {
@@ -107,7 +149,14 @@ exports.postOrder = (req, res, next) => {
         },
         products: products,
         totalAmount: totalAmount,
-        orderDate: new Date()
+        orderDate: new Date(),
+        address: {
+          name: name,
+          house: house,
+          street: street,
+          city: city,
+          pin: PIN
+        }
       })
       return order.save();
     }).then(result => {
