@@ -32,6 +32,28 @@ const orderSchema = new Schema({
   orderDate: {
     type: Date,
     required: true
+  },
+  address: {
+    name: {
+      type: String,
+      required: true
+    },
+    house: {
+      type: String,
+      required: true
+    },
+    street: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    pin: {
+      type: Number,
+      required: true
+    }
   }
 });
 
