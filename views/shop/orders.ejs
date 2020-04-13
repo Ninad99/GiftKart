@@ -20,6 +20,15 @@
                 <% }); %>
             </ul>
             <h4>Total amount - &#8377;<%= order.totalAmount %></h4>
+            <hr />
+            <h4>Shipping address:</h4>
+            <p>
+              <strong><%= order.address.name %></strong><br />
+              <%= order.address.house %>,<br />
+              <%= order.address.street %>,<br />
+              <%= order.address.city %>,<br />
+              <%= order.address.pin %>
+            </p>
             <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
           </li>
         <% }); %>
