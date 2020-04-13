@@ -1,5 +1,6 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/product.css">
+    <link rel="stylesheet" href="/css/forms.css">
     <link rel="stylesheet" href="/css/cart.css">
 </head>
 
@@ -23,9 +24,73 @@
         <% }) %>
       </ul>
       <hr />
-      <div class="centered">
-        <h3>Cart total = &#8377; <%= totalAmount %></h3>
-        <form action="/create-order" method="POST">
+      <div class="cart-flex">
+        <div class="cart-price-display">
+          <h4>Items in order:</h4>
+          <ul>
+            <% products.forEach(p => { %>
+              <li>
+                <span><%= p.productId.title %> * <%= p.quantity %> = &#8377; <%= p.productId.price * p.quantity %></span>
+              </li>
+            <% }) %>
+          </ul>
+          <h2>Cart total = &#8377; <%= totalAmount %></h2>
+        </div>
+        <form class="cart-form" action="/create-order" method="POST">
+          <p class="page-header centered"><strong>GiftKart</strong> | Place Order</p>
+          <% if (errorMessage) { %>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
+          <% } %>
+          <div class="form-control">
+            <label for="name">Name</label>
+            <input
+              required
+              type="text"
+              name="name"
+              id="name"
+              class="<%= validationErrors.find(e => e.param === 'name') ? 'invalid' : '' %>"
+              value="<%= oldInput.name %>">
+          </div>
+          <div class="form-control">
+            <label for="house">Flat no./House no.</label>
+            <input 
+              required
+              type="text"
+              name="house" 
+              id="house"
+              class="<%= validationErrors.find(e => e.param === 'house') ? 'invalid' : '' %>"
+              value="<%= oldInput.house %>">
+          </div>
+          <div class="form-control">
+            <label for="street">Street/Locality</label>
+            <input 
+              required
+              type="text"
+              name="street" 
+              id="street"
+              class="<%= validationErrors.find(e => e.param === 'street') ? 'invalid' : '' %>"
+              value="<%= oldInput.street %>" >
+          </div>
+          <div class="form-control">
+            <label for="house">City</label>
+            <input 
+              required
+              type="text"
+              name="city" 
+              id="city"
+              class="<%= validationErrors.find(e => e.param === 'city') ? 'invalid' : '' %>"
+              value="<%= oldInput.city %>" >
+          </div>
+          <div class="form-control">
+            <label for="pin">PIN Code</label>
+            <input 
+              required
+              type="number"
+              name="PIN" 
+              id="PIN"
+              class="<%= validationErrors.find(e => e.param === 'PIN') ? 'invalid' : '' %>"
+              value="<%= oldInput.PIN %>" >
+          </div>
           <input type="hidden" name="totalamount" value="<%= totalAmount %>">
           <button class="btn" type="submit">Order Now!</button>
         </form>

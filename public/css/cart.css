@@ -20,3 +20,36 @@
 .cart-list .cart-list-item .cart-list-item--info h4 {
   color: #757575;
 }
+
+.cart-flex {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  padding: 1rem 0;
+}
+
+.cart-price-display {
+  padding: 1rem 2rem;
+  border: 1px solid #C5CAE9;
+}
+
+.cart-form {
+  border: 1px solid #C5CAE9;
+  border-radius: 4px;
+  width: 30rem;
+  max-width: 100%;
+  display: inline-block;
+  padding: 1.5rem 2.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .cart-price-display {
+    padding: .5rem 1rem;
+  }
+
+  .cart-form {
+    padding: .75rem 1.25rem;
+  }
+}
