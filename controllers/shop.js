@@ -100,13 +100,14 @@ exports.postCartDeleteProduct = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
+
 exports.postOrder = (req, res, next) => {
   const { name, house, street, city, PIN } = req.body;
   const totalAmount = req.body.totalamount;
+
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log(errors.array());
     req.user
     .populate('cart.items.productId')
     .execPopulate()
@@ -129,11 +130,11 @@ exports.postOrder = (req, res, next) => {
     })
     .catch(err => {
       console.log(err);
-      return next(err);
     })
-  }
-
-  req.user.populate('cart.items.productId')
+  } 
+  
+  else{
+    req.user.populate('cart.items.productId')
     .execPopulate()
     .then(user => {
       const products = user.cart.items.map(item => {
@@ -155,7 +156,7 @@ exports.postOrder = (req, res, next) => {
           house: house,
           street: street,
           city: city,
-          pin: PIN
+          pin: parseInt(PIN)
         }
       })
       return order.save();
@@ -168,6 +169,7 @@ exports.postOrder = (req, res, next) => {
       console.log(err);
       return next(err);
     })
+  }
 }
 
 exports.getOrders = (req, res, next) => {
