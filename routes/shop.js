@@ -47,6 +47,12 @@ router.post(
 // /recommend-products -> POST 
 router.post("/recommend-products", shopController.postRecommendProducts);
 
+// autocomplete route -> POST 
+router.get("/autocomplete", shopController.autocomplete);
+
+// search-prodicts route -> POST 
+router.post("/search-products", shopController.searchProducts);
+
 
 module.exports = router;
 
