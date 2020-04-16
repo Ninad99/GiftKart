@@ -1,7 +1,10 @@
 <div class="backdrop"></div>
 
 <header class="main-header">
-    <button id="side-menu-toggle">Menu</button>
+    <div class="side-menu-toggle-container">
+        <button id="side-menu-toggle">Menu</button>
+    </div>
+
     <nav class="main-header__nav">
         <ul class="main-header__item-list">
             <li class="main-header__item">
@@ -11,49 +14,71 @@
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
             </li>
             <% if (isAuthenticated && !isAdmin) { %>
-                <li class="main-header__item">
-                    <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-                </li>
-                <li class="main-header__item">
-                    <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
-                </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            </li>
             <% } %>
             <% if (isAdmin) { %>
-                <li class="main-header__item">
-                    <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
-                </li>
-                <li class="main-header__item">
-                    <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
-                </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add
+                    Product</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
+            </li>
             <% } %>
         </ul>
 
-        <div>
+        <div class="search-container-web" id="search-container-web">
             <form action="/search-products" method="POST">
-                <div style="display: flex; width: 40vw;" class="form-control">
-                    <input style="margin: 10px; width: 100%;" name="query" id="search">
-                    <button style="margin:10px;" class="btn" type="submit" >Search</button>
+                <div style="display: flex;" class="form-control">
+                    <input style="margin: 10px; width: 100%;" name="query" id="search-web">
+                    <button style="margin:10px;" class="btn" type="submit">Search</button>
                 </div>
             </form>
         </div>
 
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
-                <li class="main-header__item">
-                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
-                </li>
-                <li class="main-header__item">
-                    <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
-                </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            </li>
             <% } else { %>
-                <li class="main-header__item">
-                    <form action="/logout" method="POST">
-                        <button type="submit">Logout</button>
-                    </form>
-                </li>
+            <li class="main-header__item">
+                <form action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
             <% } %>
         </ul>
     </nav>
+
+    <div class="search-container-mobile" id="target" onclick="clickInside();">
+        <div class="search-bar-mobile" align="center">
+            <div style="display: none; width: 80vw;" id="in">
+                <form action="/search-products" method="POST" id="formgg">
+                    <div style="display: flex;" class="form-control">
+                        <input style="margin:5px;width: 90%;" name="query" id="search-mobile">
+                        <button style="margin: 5px;background-color: transparent;border: none;" class="btn"
+                            type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div align="right" id="out" align="right">
+            <button style="margin: 5px;background-color: transparent; border: none;" class="btn">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
 </header>
 
 <nav class="mobile-nav">
@@ -68,34 +93,34 @@
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
         </li>
         <% if (isAuthenticated && !isAdmin) { %>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-            </li>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
-            </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+        </li>
         <% } %>
         <% if (isAdmin) { %>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
-            </li>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
-            </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products</a>
+        </li>
         <% } %>
         <% if (!isAuthenticated) { %>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
-            </li>
-            <li class="mobile-nav__item">
-                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
-            </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+        </li>
         <% } else { %>
-            <li class="mobile-nav__item">
-                <form action="/logout" method="POST">
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+        <li class="mobile-nav__item">
+            <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </li>
         <% } %>
     </ul>
 </nav>
