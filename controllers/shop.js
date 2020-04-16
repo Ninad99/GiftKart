@@ -236,3 +236,40 @@ exports.postRecommendProducts = (req, res, next) => {
 		.catch(err => console.log(err));
 };
 
+exports.autocomplete = (req, res, next) => {
+  let regex = new RegExp(req.query["term"], 'i');
+
+  Product.find({ title: { $regex : regex } })
+  .sort({"updated_at":-1})
+  .sort({"created_at":-1})
+  .limit(20)
+  .exec( (err, data) =>{
+    let result = [];
+    if(!err){
+      if(data && data.length && data.length > 0){
+        data.forEach( products => {
+          let obj = {
+            id: products._id,
+            label: products.title
+          };
+          result.push(obj);
+        });
+      }
+      res.jsonp(result);
+    }
+  });
+}
+
+exports.searchProducts = (req, res, next) =>{
+  let regex = new RegExp(req.body.query, 'i');
+
+  Product.find({ title: { $regex :regex } })
+    .then(products => {
+      return res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'GiftKart | All Products',
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
+}
