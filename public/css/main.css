@@ -289,12 +289,38 @@ form {
   z-index: 1001 !important;
 }
 
+.search-container-web{
+  display: none;
+  margin-left: auto; 
+  margin-right: auto;
+  width: 40vw; 
+}
+
+.search-container-mobile{
+  display: block;
+  width: 40vw;
+  flex:1;
+  margin-left: 7vw;
+}
+
+.side-menu-toggle-container{
+  display: block;
+}
+
+.search-bar-mobile{
+  width: 100%;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
   }
 
   #side-menu-toggle {
+    display: none;
+  }
+  
+  .side-menu-toggle-container{
     display: none;
   }
 
@@ -305,4 +331,13 @@ form {
   .page-header {
     font-size: 1.75rem;
   }
+
+  .search-container-web {
+    display: block;
+  }
+
+  .search-container-mobile {
+    display: none;
+  }
 }
+
