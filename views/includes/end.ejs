@@ -1,28 +1,6 @@
 <script src="/js/main.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/js/click-outside.js"></script>
-
-<script>
-	var target = document.getElementById('target');
-	var outTarget = document.getElementById('out');
-	var inTarget = document.getElementById('in');
-	var side_menu_toggle = document.getElementById("side-menu-toggle");
-
-	var myEvent = new onClickOutside(target, function () {
-		outTarget.style.display = "block"
-		side_menu_toggle.style.display = "block"
-		inTarget.style.display = "none"
-	})
-
-	function clickInside() {
-		side_menu_toggle.style.display = "none"
-		outTarget.style.display = "none"
-		inTarget.style.display = "block"
-	}
-
-</script>
-
 <script>
 	$(function () {
 		let searchBarID = "search-web";

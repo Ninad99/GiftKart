@@ -2,7 +2,7 @@
 
 <header class="main-header">
     <div class="side-menu-toggle-container">
-        <button id="side-menu-toggle">Menu</button>
+        <button id="side-menu-toggle"><i class="fa fa-bars"></i></button>
     </div>
 
     <nav class="main-header__nav">
@@ -35,8 +35,8 @@
         <div class="search-container-web" id="search-container-web">
             <form action="/search-products" method="POST">
                 <div style="display: flex;" class="form-control">
-                    <input style="margin: 10px; width: 100%;" name="query" id="search-web">
-                    <button style="margin:10px;" class="btn" type="submit">Search</button>
+                    <input style="margin: 8px; width: 100%;" name="query" id="search-web">
+                    <button style="margin: 8px;" class="btn" type="submit"><i class="fa fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -59,24 +59,14 @@
         </ul>
     </nav>
 
-    <div class="search-container-mobile" id="target" onclick="clickInside();">
-        <div class="search-bar-mobile" align="center">
-            <div style="display: none; width: 80vw;" id="in">
-                <form action="/search-products" method="POST" id="formgg">
-                    <div style="display: flex;" class="form-control">
-                        <input style="margin:5px;width: 90%;" name="query" id="search-mobile">
-                        <button style="margin: 5px;background-color: transparent;border: none;" class="btn"
-                            type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div align="right" id="out" align="right">
-            <button style="margin: 5px;background-color: transparent; border: none;" class="btn">
-                <i class="fa fa-search"></i>
-            </button>
+    <div class="search-container-mobile" id="search-container-mobile">
+        <div class="search-bar-mobile">
+            <form action="/search-products" method="POST">
+                <div style="display: flex;" class="form-control">
+                    <input style="margin: 8px 0; width: 100%;" name="query" id="search-mobile">
+                    <button style="margin: 8px;" class="btn" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
         </div>
     </div>
 </header>
