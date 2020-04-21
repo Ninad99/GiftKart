@@ -160,17 +160,6 @@
   cursor: pointer;
 }
 
-.filter-container{
-  display: block;
-  position: fixed;
-  left: 0;
-  top: 7.5%;
-}
-
-.products-container {
-  margin-left: 300px;
-}
-
 .modal-container{
   display: none;
 }
@@ -191,8 +180,8 @@
 	position:fixed;
 	width:60px;
 	height:60px;
-	bottom:40px;
-	right:40px;
+	bottom:30px;
+	right:30px;
 	background-color:#303F9F;
   color:#eee;
   border-radius: 50%;

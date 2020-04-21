@@ -1,3 +1,18 @@
+.products-container {
+  display: flex;
+  margin-left: 300px;
+}
+
+.filter-container{
+  width: 20vw;
+  min-width: 300px;
+  display: block;
+  position: fixed;
+  top: 7.5%;
+  left: 0;
+  z-index: -1;
+}
+
 .product-form {
   width: 20rem;
   max-width: 90%;
@@ -48,5 +63,10 @@
 @media screen and (max-width: 768px) {
   .orders-list__item {
     font-size: 87.5%;
+  }
+
+  .products-container {
+    display: block;
+    margin: 0;
   }
 }
