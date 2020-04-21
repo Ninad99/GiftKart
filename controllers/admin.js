@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator');
 
 const Admin = require("../models/admin");
 const Product = require("../models/product");
+const Order = require('../models/order');
 
 exports.getUploadProduct = (req, res, next) => {
 	return res.render("admin/add-product", {
@@ -275,5 +276,38 @@ exports.postEditProduct = (req, res, next) => {
 					res.redirect('/admin/products');
 				})
 			})
+		.catch(err => console.log(err));
+}
+
+exports.getAdminOrders = (req, res, next) => {
+	Order.find()
+		.then(orders => {
+			return res.render('admin/orders', {
+				pageTitle: 'View Orders | Admin',
+				path: '/admin/orders',
+				orders: orders
+			})
+		})
+		.catch(err => console.log(err));
+}
+
+exports.postAdminOrderStatus = (req, res, next) => {
+	const { orderId, orderStatus } = req.body;
+
+	Order.findById(orderId)
+		.then(order => {
+			order.status = orderStatus;
+			return order.save();
+		})
+		.then(result => {
+			return Order.find();
+		})
+		.then(orders => {
+			return res.render('admin/orders', {
+				pageTitle: 'View Orders | Admin',
+				path: '/admin/orders',
+				orders: orders
+			})
+		})
 		.catch(err => console.log(err));
 }

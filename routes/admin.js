@@ -82,4 +82,10 @@ router.post('/edit-product',
 // /delete-product -> POST
 router.post('/delete-product', isAdmin, adminController.postDeleteProduct);
 
+// /orders -> GET
+router.get('/orders', isAdmin, adminController.getAdminOrders);
+
+// /change-order-status -> POST
+router.post('/change-order-status', isAdmin, adminController.postAdminOrderStatus);
+
 module.exports = router;
