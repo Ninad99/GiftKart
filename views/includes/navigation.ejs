@@ -11,16 +11,8 @@
                 <a class="<%= path === '/' ? 'active' : '' %>" href="/"><strong>GiftKart</strong> Home</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+                <a class="<%= path === '/products' ? 'active' : '' %>" href="/products"><i class="fas fa-gifts"></i>&nbsp;Products</a>
             </li>
-            <% if (isAuthenticated && !isAdmin) { %>
-            <li class="main-header__item">
-                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
-            </li>
-            <% } %>
             <% if (isAdmin) { %>
             <li class="main-header__item">
                 <a class="<%= path === '/admin/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product</a>
@@ -38,7 +30,7 @@
             <form action="/search-products" method="POST">
                 <div style="display: flex;" class="form-control">
                     <input style="margin: 8px; width: 100%;" name="query" id="search-web">
-                    <button style="margin: 8px;" class="btn" type="submit"><i class="fa fa-search"></i></button>
+                    <button style="margin: 8px;" class="btn" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -46,15 +38,23 @@
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
             <li class="main-header__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup"><i class="fas fa-user-plus"></i>&nbsp;Signup</a>
             </li>
             <% } else { %>
+                <% if (isAuthenticated && !isAdmin) { %>
+                    <li class="main-header__item">
+                        <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a>
+                    </li>
+                    <li class="main-header__item">
+                        <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders"><i class="fas fa-list-ul"></i>&nbsp;Orders</a>
+                    </li>
+                <% } %>
             <li class="main-header__item">
                 <form action="/logout" method="POST">
-                    <button type="submit">Logout</button>
+                    <button type="submit" style="padding: 0;"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</button>
                 </form>
             </li>
             <% } %>
@@ -66,7 +66,7 @@
             <form action="/search-products" method="POST">
                 <div style="display: flex;" class="form-control">
                     <input style="margin: 8px 0; width: 100%;" name="query" id="search-mobile">
-                    <button style="margin: 8px;" class="btn" type="submit"><i class="fa fa-search"></i></button>
+                    <button style="margin: 8px;" class="btn" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
@@ -82,14 +82,14 @@
             <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
+            <a class="<%= path === '/products' ? 'active' : '' %>" href="/products"><i class="fas fa-gifts"></i>&nbsp;Products</a>
         </li>
         <% if (isAuthenticated && !isAdmin) { %>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
+            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
+            <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders"><i class="fas fa-list-ul"></i>&nbsp;Orders</a>
         </li>
         <% } %>
         <% if (isAdmin) { %>
@@ -105,15 +105,15 @@
         <% } %>
         <% if (!isAuthenticated) { %>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"><i class="fas fa-sign-in-alt"></i>&nbsp;Login</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+            <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup"><i class="fas fa-user-plus"></i>&nbsp;Signup</a>
         </li>
         <% } else { %>
         <li class="mobile-nav__item">
             <form action="/logout" method="POST">
-                <button type="submit">Logout</button>
+                <button type="submit"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</button>
             </form>
         </li>
         <% } %>
