@@ -45,6 +45,29 @@
   text-align: center;
 }
 
+.product-detail-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-image {
+  margin: 0;
+  padding: 1rem 1.5rem;
+  flex-basis: 35%;
+}
+
+.detail-image img {
+  width: 100%;
+}
+
+.detail-info {
+  text-align: left;
+  padding: 0 2rem;
+  flex-basis: 65%;
+}
+
 .orders-list {
   display: flex;
   flex-direction: column;
@@ -68,5 +91,14 @@
   .products-container {
     display: block;
     margin: 0;
+  }
+
+  .detail-image {
+    flex-basis: 80%;
+  }
+  
+  .detail-info {
+    flex-basis: 100%;
+    padding: 0 .75rem;
   }
 }

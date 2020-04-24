@@ -6,13 +6,19 @@
     <%- include('../includes/navigation.ejs') %>
 
     <main class="centered">
-        <h1><%= product.title %></h1>
-        <hr>
-        <div class="detail-image">
-            <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+        <div class="product-detail-flex">
+            <div class="detail-image">
+                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+            </div>
+            <div class="detail-info">
+                <h1><%= product.title %></h1>
+                <p><%= product.description %></p>
+                <h2>&#8377; <%= product.price %></h2>
+                <% if (isAuthenticated && !isAdmin) { %>
+                    <%- include('../includes/add-to-cart.ejs', { product: product }) %>
+                <% } %>
+            </div>
         </div>
-        <h2>&#8377; <%= product.price %></h2>
-        <p><%= product.description %></p>
         <hr>
         <% if (similarProducts.length > 0) { %>
         <h1>Similar Products</h1>
@@ -29,19 +35,16 @@
                     <h3 class="product__price">&#8377; <%= similarProduct.price %></h3>
                 </div>
                 <div class="card__actions">
-                    <a href="/products/<%= similarProduct._id %>" class="btn">Details</a>
+                    <a href="/products/<%= similarProduct._id %>" class="btn"><i class="fas fa-info-circle"></i>&nbsp;Details</a>
                     <% if (isAuthenticated && !isAdmin) { %>
-                    <%- include('../includes/add-to-cart.ejs', { product: product }) %>
+                        <%- include('../includes/add-to-cart.ejs', { product: product }) %>
                     <% } %>
                 </div>
             </article>
             <% } %>
         </div>
         <% } else { %>
-        <h1>No Similar products found!</h1>
-        <% } %>
-        <% if (isAuthenticated && !isAdmin) { %>
-        <%- include('../includes/add-to-cart.ejs', { product: product }) %>
+        <h3>No Similar products found!</h3>
         <% } %>
     </main>
 
