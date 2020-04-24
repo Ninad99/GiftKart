@@ -47,6 +47,7 @@
               <div class="dropdown-content">
                 <form action="/admin/change-order-status" method="POST">
                   <input type="hidden" value="<%= order._id %>" name="orderId" />
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <input type="hidden" value="transit" name="orderStatus" />
                   <% if (order.status === 'transit') { %>
                     <button disabled>In Transit</button>
@@ -56,6 +57,7 @@
                 </form>
                 <form action="/admin/change-order-status" method="POST">
                   <input type="hidden" value="<%= order._id %>" name="orderId" />
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <input type="hidden" value="delivered" name="orderStatus" />
                   <% if (order.status === 'delivered') { %>
                     <button disabled>Delivered</button>
@@ -65,6 +67,7 @@
                 </form>
                 <form action="/admin/change-order-status" method="POST">
                   <input type="hidden" value="<%= order._id %>" name="orderId" />
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <input type="hidden" value="cancelled" name="orderStatus" />
                   <% if (order.status === 'cancelled') { %>
                     <button disabled>Cancelled</button>

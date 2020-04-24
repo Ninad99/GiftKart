@@ -33,6 +33,7 @@
             <i class="fa fa-eye" onclick="togglePasswordVisibility()" id="eye" ></i>
           </span>
       </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <button style="margin-right: 1rem;" class="btn" type="submit">Login</button>
       <a href="/admin/login" class="btn" type="submit">Admin Login</a>
       <div style="margin-top: 1rem;"><a href="/reset">Reset Password</a></div>
