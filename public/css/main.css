@@ -81,15 +81,11 @@ form {
 }
 
 .main-header__item {
-  margin: 0 1rem;
+  margin: 0 .5rem;
   padding: 0;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-}
-
-.main-header__item:nth-child(1) {
-  flex-shrink: 2;
 }
 
 .main-header__item a,
@@ -100,11 +96,18 @@ form {
   text-decoration: none;
   color: var(--color-text-white);
   cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
 }
 
 .main-header__item a:hover,
 .main-header__item a:active,
 .main-header__item a.active,
+.main-header__item a:hover > i,
+.main-header__item a:active > i,
+.main-header__item a.active > i,
 .main-header__item button:hover,
 .main-header__item button:active {
   color: var(--color-accent);
@@ -209,7 +212,7 @@ form {
 
 .card__header,
 .card__content {
-  padding: 1rem;
+  padding: .25rem;
 }
 
 .card__header h1,
@@ -228,8 +231,11 @@ form {
 }
 
 .card__actions {
-  padding: 1rem;
+  padding: .5rem;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .card__actions button,

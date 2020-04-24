@@ -30,21 +30,22 @@
 			<div class="grid">
 				<% for (let product of prods) { %>
 				<article class="card product-item">
-					<header class="card__header">
-						<h1 class="product__title"><%= product.title %></h1>
-					</header>
 					<div class="card__image">
 						<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 					</div>
-					<div class="card__content">
-						<h3 class="product__price">&#8377; <%= product.price %></h3>
-						<p class="product__description"><%= product.description %></p>
-					</div>
-					<div class="card__actions">
-						<a href="/products/<%= product._id %>" class="btn">Details</a>
-						<% if (isAuthenticated && !isAdmin) { %>
-						<%- include('../includes/add-to-cart.ejs', { product: product }) %>
-						<% } %>
+					<div style="padding: .5rem 0">
+						<div class="card__header">
+							<h1 class="product__title"><%= product.title %></h1>
+						</div>
+						<div class="card__content">
+							<h3 class="product__price">&#8377; <%= product.price %></h3>
+						</div>
+						<div class="card__actions">
+							<a href="/products/<%= product._id %>" class="btn">Details</a>
+							<% if (isAuthenticated && !isAdmin) { %>
+							<%- include('../includes/add-to-cart.ejs', { product: product }) %>
+							<% } %>
+						</div>
 					</div>
 				</article>
 				<% } %>
