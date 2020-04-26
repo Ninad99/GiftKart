@@ -29,6 +29,8 @@
                 <strong style="color: #FF9800;">In transit</strong>
               <% } else if (order.status === 'delivered') { %>
                 <strong style="color: green;">Delivered</strong>
+              <% } else if (order.status === 'cancelled') { %>
+                <strong style="color: red;">Cancelled</strong>
               <% } %>
             </p>
             <h4>Shipping address:</h4>
