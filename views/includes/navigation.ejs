@@ -14,7 +14,7 @@
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/products"><i class="fas fa-gifts"></i>&nbsp;Products</a>
             </li>
         </ul>
-
+        <% if (path !== '/') { %>
         <div class="search-container-web" id="search-container-web">
             <form action="/search-products" method="POST">
                 <div style="display: flex; align-items: center;" class="form-control">
@@ -23,7 +23,7 @@
                 </div>
             </form>
         </div>
-
+        <% } %>
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
             <li class="main-header__item">
