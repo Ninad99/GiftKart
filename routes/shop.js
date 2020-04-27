@@ -9,7 +9,10 @@ const isAuth = require('../middleware/is-auth');
 router.get('/', shopController.getIndex);
 
 // /products -> GET (View products)
-router.get('/products', shopController.getProducts);
+router.get("/products", shopController.getProducts);
+
+// recomended-prods -> POST
+router.post("/products", shopController.postProducts);
 
 // /products/:productId -> GET (View individual product)
 router.get('/products/:productId', shopController.getProduct);
@@ -44,8 +47,8 @@ router.post(
 	shopController.postOrder
 );
 
-// /recommend-products -> POST 
-router.post("/recommend-products", shopController.postRecommendProducts);
+// recommend-product-index -> GET
+router.get("/recommend-products", shopController.getRecommendProductIndex);
 
 // autocomplete route -> POST 
 router.get("/autocomplete", shopController.autocomplete);
@@ -55,5 +58,3 @@ router.post("/search-products", shopController.searchProducts);
 
 
 module.exports = router;
-
-

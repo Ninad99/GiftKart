@@ -11,16 +11,16 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-  Product.find()
-    .then(products => {
-      return res.render('shop/product-list', {
-        prods: products,
-        pageTitle: 'GiftKart | All Products',
-        path: '/products'
-      });
-    })
-    .catch(err => console.log(err));
-}
+	Product.find()
+		.then((products) => {
+			return res.render("shop/product-list", {
+				prods: products,
+				pageTitle: "GiftKart | All Products",
+				path: "/products",
+			});
+		})
+		.catch((err) => console.log(err));
+};
 
 exports.getProduct = (req, res, next) => {
   const prodID = req.params.productId;
@@ -187,7 +187,7 @@ exports.getOrders = (req, res, next) => {
     })
 }
 
-exports.postRecommendProducts = (req, res, next) => {
+exports.postProducts = (req, res, next) => {
   let query = {} ;
 
   //code to handle ages
@@ -224,13 +224,12 @@ exports.postRecommendProducts = (req, res, next) => {
     query.gender = queryGender;
   }
 
-  console.log('query', query);
 	Product.find(query)
 		.then(products => {
-			return res.render("shop/recommend-products", {
+			return res.render("shop/product-list", {
 				prods: products,
-				pageTitle: "GiftKart | Recommended Products",
-				path: "/recommend-products"
+				pageTitle: "GiftKart | Products",
+				path: "/products",
 			});
 		})
 		.catch(err => console.log(err));
@@ -273,3 +272,10 @@ exports.searchProducts = (req, res, next) =>{
     })
     .catch(err => console.log(err));
 }
+
+exports.getRecommendProductIndex = (req, res, next) => {
+	return res.render("shop/recommend-product-index", {
+		pageTitle: "GiftKart | Recommend Product",
+		path: "/products",
+	});
+};
