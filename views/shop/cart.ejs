@@ -11,10 +11,15 @@
       <ul class="cart-list">
         <% products.forEach(p => { %>
           <li class="cart-list-item">
-            <div class="cart-list-item--info">
-              <h3><%= p.productId.title %></h3>
-              <h5>Quantity - <%= p.quantity %></h5>
-              <h4>&#8377; <%= p.productId.price * p.quantity %></h4>
+            <div class="container">
+              <div class="cart-item-img">
+                <img src="<%= p.productId.imageUrl %>" alt="<%= p.productId.title %>">
+              </div>
+              <div class="cart-list-item--info">
+                <h3><%= p.productId.title %></h3>
+                <h5>Quantity - <%= p.quantity %></h5>
+                <h4>&#8377; <%= p.productId.price * p.quantity %></h4>
+              </div>
             </div>
             <form action="/cart-delete-item" method="POST">
               <input type="hidden" value="<%= p.productId._id %>" name="productId" />
@@ -93,6 +98,7 @@
               value="<%= oldInput.PIN %>" >
           </div>
           <input type="hidden" name="totalamount" value="<%= totalAmount %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
           <button class="btn" type="submit">Order Now!</button>
         </form>
       </div>
