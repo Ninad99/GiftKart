@@ -39,7 +39,7 @@
 
 .product__price {
   text-align: center;
-  color: #212121;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -81,7 +81,7 @@
 
 .orders-list__item {
   padding: .5rem 1rem;
-  border: 1px solid #C5CAE9;
+  border: 1px solid var(--color-primary-light);
   margin: .5rem 0;
 }
 

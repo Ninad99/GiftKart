@@ -293,11 +293,12 @@ form {
 .btn.accent {
   color: var(--color-accent);
   border-color: var(--color-accent);
+  background: transparent;
 }
 
 .btn.accent:hover,
 .btn.accent:active {
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-hover);
   color: var(--color-text-white);
 }
 
