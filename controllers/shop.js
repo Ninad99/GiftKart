@@ -8,18 +8,18 @@ exports.getIndex = (req, res, next) => {
     pageTitle: 'GiftKart | Home',
     path: '/'
   });
-}
+};
 
 exports.getProducts = (req, res, next) => {
-	Product.find()
-		.then((products) => {
-			return res.render("shop/product-list", {
-				prods: products,
-				pageTitle: "GiftKart | All Products",
-				path: "/products",
-			});
-		})
-		.catch((err) => console.log(err));
+  Product.find()
+    .then(products => {
+      return res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'GiftKart | All Products',
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -37,7 +37,9 @@ exports.getProduct = (req, res, next) => {
       return Product.find(similarProductsQuery);
     })
     .then(similarProducts => {
-      similarProducts = similarProducts.filter(prod => prod._id.toString() !== prodID.toString());
+      similarProducts = similarProducts.filter(
+        prod => prod._id.toString() !== prodID.toString()
+      );
       return res.render('shop/product-detail', {
         product: fetchedProduct,
         similarProducts: similarProducts,
@@ -45,8 +47,8 @@ exports.getProduct = (req, res, next) => {
         path: '/products'
       });
     })
-    .catch(err => console.log(err)); 
-}
+    .catch(err => console.log(err));
+};
 
 exports.getCart = (req, res, next) => {
   req.user
@@ -58,7 +60,7 @@ exports.getCart = (req, res, next) => {
           req.user.removeFromCartById(curr._id);
           return acc;
         }
-        return (curr.quantity * curr.productId.price) + acc;
+        return curr.quantity * curr.productId.price + acc;
       }, 0);
       res.render('shop/cart', {
         pageTitle: 'GiftKart | Your Cart',
@@ -77,7 +79,7 @@ exports.getCart = (req, res, next) => {
       });
     })
     .catch(err => console.log(err));
-}
+};
 
 exports.postCart = (req, res, next) => {
   const prodID = req.body.productId;
@@ -86,20 +88,20 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-        res.redirect('/cart');
+      res.redirect('/cart');
     })
-    .catch(err => console.log(err))
-}
+    .catch(err => console.log(err));
+};
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  req.user.removeFromCart(prodId)
+  req.user
+    .removeFromCart(prodId)
     .then(result => {
       res.redirect('/cart');
     })
     .catch(err => console.log(err));
-}
-
+};
 
 exports.postOrder = (req, res, next) => {
   const { name, house, street, city, PIN } = req.body;
@@ -109,68 +111,69 @@ exports.postOrder = (req, res, next) => {
 
   if (!errors.isEmpty()) {
     req.user
-    .populate('cart.items.productId')
-    .execPopulate()
-    .then(user => {
-      return res.status(422).render('shop/cart', {
-        pageTitle: 'GiftKart | Your Cart',
-        path: '/cart',
-        products: user.cart.items,
-        totalAmount: totalAmount,
-        oldInput: {
-          name: name,
-          house: house,
-          street: street,
-          city: city,
-          PIN: PIN
-        },
-        errorMessage: errors.array()[0].msg,
-        validationErrors: errors.array()
+      .populate('cart.items.productId')
+      .execPopulate()
+      .then(user => {
+        return res.status(422).render('shop/cart', {
+          pageTitle: 'GiftKart | Your Cart',
+          path: '/cart',
+          products: user.cart.items,
+          totalAmount: totalAmount,
+          oldInput: {
+            name: name,
+            house: house,
+            street: street,
+            city: city,
+            PIN: PIN
+          },
+          errorMessage: errors.array()[0].msg,
+          validationErrors: errors.array()
+        });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  } 
-  
-  else{
-    req.user.populate('cart.items.productId')
-    .execPopulate()
-    .then(user => {
-      const products = user.cart.items.map(item => {
-        return {
-          quantity: item.quantity,
-          productData: { ...item.productId._doc }
-        }
+  } else {
+    req.user
+      .populate('cart.items.productId')
+      .execPopulate()
+      .then(user => {
+        const products = user.cart.items.map(item => {
+          return {
+            quantity: item.quantity,
+            productData: { ...item.productId._doc }
+          };
+        });
+        const order = new Order({
+          user: {
+            email: req.user.email,
+            userId: req.user
+          },
+          products: products,
+          totalAmount: totalAmount,
+          orderDate: new Date(),
+          address: {
+            name: name,
+            house: house,
+            street: street,
+            city: city,
+            pin: parseInt(PIN)
+          }
+        });
+        return order.save();
       })
-      const order = new Order({
-        user: {
-          email: req.user.email,
-          userId: req.user
-        },
-        products: products,
-        totalAmount: totalAmount,
-        orderDate: new Date(),
-        address: {
-          name: name,
-          house: house,
-          street: street,
-          city: city,
-          pin: parseInt(PIN)
-        }
+      .then(result => {
+        return req.user.clearCart();
       })
-      return order.save();
-    }).then(result => {
-      return req.user.clearCart();
-    }).then(() => {
-      res.redirect('/orders');
-    })
-    .catch(err => {
-      console.log(err);
-      return next(err);
-    })
+      .then(() => {
+        res.redirect('/orders');
+      })
+      .catch(err => {
+        console.log(err);
+        return next(err);
+      });
   }
-}
+};
 
 exports.getOrders = (req, res, next) => {
   Order.find({ 'user.userId': req.user._id })
@@ -184,85 +187,83 @@ exports.getOrders = (req, res, next) => {
     .catch(err => {
       console.log(err);
       return next(err);
-    })
-}
+    });
+};
 
 exports.postProducts = (req, res, next) => {
-  let query = {} ;
+  let query = {};
 
   //code to handle ages
-  if(req.body.maxage !== '0'){
-    query["ages.max"] = req.body.maxage
+  if (req.body.maxage !== '0') {
+    query['ages.max'] = req.body.maxage;
   }
-  if(req.body.minage !== '0'){
-    query["ages.min"] = req.body.minage
+  if (req.body.minage !== '0') {
+    query['ages.min'] = req.body.minage;
   }
-  
+
   // code to handle occasions
-  if(req.body.occasion) {
-    if(Array.isArray(req.body.occasion)) {
+  if (req.body.occasion) {
+    if (Array.isArray(req.body.occasion)) {
       query.occasion = [...req.body.occasion];
     } else {
-      query.occasion =  req.body.occasion;
-    } 
+      query.occasion = req.body.occasion;
+    }
   }
 
   // code to handle price
-  if(req.body.minprice && req.body.maxprice) {
-    query.price = { $gt: req.body.minprice, $lt: req.body.maxprice};
-  }
-  else if(req.body.minprice) {
-    query.price = { $gt: req.body.minprice};
-  }
-  else if(req.body.maxprice){
-    query.price = { $lt: req.body.maxprice};
+  if (req.body.minprice && req.body.maxprice) {
+    query.price = { $gt: req.body.minprice, $lt: req.body.maxprice };
+  } else if (req.body.minprice) {
+    query.price = { $gt: req.body.minprice };
+  } else if (req.body.maxprice) {
+    query.price = { $lt: req.body.maxprice };
   }
 
   // code to handle gender
-  if(req.body.gender){
+  if (req.body.gender) {
     let queryGender = [req.body.gender, 'B'];
     query.gender = queryGender;
   }
 
-	Product.find(query)
-		.then(products => {
-			return res.render("shop/product-list", {
-				prods: products,
-				pageTitle: "GiftKart | Products",
-				path: "/products",
-			});
-		})
-		.catch(err => console.log(err));
+  Product.find(query)
+    .then(products => {
+      return res.render('shop/product-list', {
+        prods: products,
+        pageTitle: 'GiftKart | Products',
+        path: '/products'
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 exports.autocomplete = (req, res, next) => {
-  let regex = new RegExp(req.query["term"], 'i');
+  let regex = new RegExp(req.query['term'], 'i');
 
-  Product.find({ title: { $regex : regex } })
-  .sort({"updated_at":-1})
-  .sort({"created_at":-1})
-  .limit(20)
-  .exec( (err, data) =>{
-    let result = [];
-    if(!err){
-      if(data && data.length && data.length > 0){
-        data.forEach( products => {
-          let obj = {
-            id: products._id,
-            label: products.title
-          };
-          result.push(obj);
-        });
+  Product.find({ title: { $regex: regex } })
+    .sort({ updated_at: -1 })
+    .sort({ created_at: -1 })
+    .limit(20)
+    .exec((err, data) => {
+      let result = [];
+      if (!err) {
+        if (data && data.length && data.length > 0) {
+          data.forEach(products => {
+            let obj = {
+              id: products._id,
+              label: products.title
+            };
+            result.push(obj);
+          });
+        }
+        res.jsonp(result);
       }
-      res.jsonp(result);
-    }
-  });
-}
+    });
+};
 
-exports.searchProducts = (req, res, next) =>{
+exports.searchProducts = (req, res, next) => {
   let regex = new RegExp(req.body.query, 'i');
 
-  Product.find({ title: { $regex :regex } })
+  Product.find({ title: { $regex: regex } })
     .then(products => {
       return res.render('shop/product-list', {
         prods: products,
@@ -271,11 +272,11 @@ exports.searchProducts = (req, res, next) =>{
       });
     })
     .catch(err => console.log(err));
-}
+};
 
 exports.getRecommendProductIndex = (req, res, next) => {
-	return res.render("shop/recommend-product-index", {
-		pageTitle: "GiftKart | Recommend Product",
-		path: "/products",
-	});
+  return res.render('shop/recommend-product-index', {
+    pageTitle: 'GiftKart | Recommend Product',
+    path: '/recommend-products'
+  });
 };
