@@ -11,14 +11,21 @@
   margin-bottom: 0.25rem;
 }
 
-.p-viewer, 
-.p-viewer2{
+.p-viewer {
   float: right;
   margin-top: -25px;
   margin-right: 10px;
   position: relative;
   z-index: 1;
   cursor:pointer;
+}
+
+.password-view-inactive {
+  color:#C5CAE9;
+}
+
+.password-view-active {
+  color: #303F9F;
 }
 
 .form-control input,
@@ -55,14 +62,6 @@
 .form-control .radio label {
   margin: 0;
   padding: 0;
-}
-
-.fa {
-  color:#C5CAE9;
-}
-
-.fa.active {
-  color: #303F9F;
 }
 
 .check-box-container {

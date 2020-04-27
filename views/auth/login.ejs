@@ -29,8 +29,8 @@
           name="password" 
           id="password" 
           value="<%= oldInput.password %>">
-          <span class="p-viewer">
-            <i class="fa fa-eye" onclick="togglePasswordVisibility()" id="eye" ></i>
+          <span class="p-viewer password-view-inactive" id="eye">
+            <i class="fas fa-eye"></i>
           </span>
       </div>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -41,17 +41,16 @@
   </main>
   <script>
     var eye = document.getElementById('eye');
+    var passwordInput = document.getElementById("password");
+    eye.addEventListener('click', function () {
+      eye.classList.toggle('password-view-inactive')
+      eye.classList.toggle('password-view-active');
 
-    const togglePasswordVisibility = () => {
-
-      eye.classList.toggle('active');
-
-      let x = document.getElementById("password");
-      if (x.type === "password") {
-        x.type = "text";
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
       } else {
-        x.type = "password";
+        passwordInput.type = "password";
       }
-    }
+    });
   </script>
   <%- include('../includes/end.ejs') %>
