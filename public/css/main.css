@@ -1,11 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,600;0,700;1,200;1,300;1,400;1,600;1,700&display=swap');
 
 :root {
   --color-primary-dark: #303F9F;
   --color-primary: #3F51B5;
-  --color-primary-light: #C5CAE9;
+  --color-primary-light: #C5DAF9;
   --color-text-white: #FFFFFF;
   --color-accent: #FF9800;
+  --color-accent-hover: #EE8700;
   --color-text-primary: #212121;
   --color-text-secondary: #757575;
   --color-divider: #BDBDBD;
@@ -18,7 +19,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 main {
@@ -246,9 +247,23 @@ form {
 
 .btn {
   display: inline-block;
+  padding: 0.5rem .75rem;
+  text-decoration: none;
+  font: inherit;
+  font-size: .9rem;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-text-white);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-search {
+  display: inline-block;
   padding: 0.35rem .5rem;
   text-decoration: none;
   font: inherit;
+  font-size: .9rem;
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
   background: var(--color-text-white);
@@ -257,7 +272,9 @@ form {
 }
 
 .btn:hover,
-.btn:active {
+.btn:active,
+.btn-search:hover,
+.btn-search:active {
   background-color: var(--color-primary);
   color: var(--color-text-white);
 }
@@ -271,6 +288,29 @@ form {
 .btn.danger:active {
   background: red;
   color: var(--color-text-white);
+}
+
+.btn.accent {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.btn.accent:hover,
+.btn.accent:active {
+  background-color: var(--color-accent);
+  color: var(--color-text-white);
+}
+
+.btn.accent.filled {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-text-white);
+}
+
+.btn.accent.filled:hover,
+.btn.accent.filled:active {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
 }
 
 .user-message {
@@ -395,7 +435,122 @@ ul#ui-id-2 {
   text-align: center;
 }
 
-@media (min-width: 768px) {
+.landing {
+  background-color: var(--color-primary-dark);
+  margin-top: 3.45rem;
+  padding: 0 1rem;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.landing .landing-img {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.landing .landing-img .container {
+  height: 100%;
+  width: 100%;
+}
+
+.landing .landing-img .container img {
+  width: 100%;
+  height: 100%;
+}
+
+.landing .landing-info {
+  flex-basis: 100%;
+  padding: 1rem;
+  text-align: center;
+}
+
+.landing .landing-info .title {
+  color: var(--color-text-white);
+  font-size: 1.5rem;
+  font-weight: 300;
+  margin: 1rem 0;
+}
+
+.landing .landing-info .subtitle {
+  color: var(--color-primary-light);
+  font-size: .8rem;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.benefits {
+  margin-top: -2rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  /* background-color: burlywood; */
+}
+
+.benefits .benefit-card {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: .5rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.benefits .benefit-card .card-icon {
+  color: var(--color-primary-dark);
+}
+
+.benefits .benefit-card h2 {
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.about {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 0 2rem 0;
+}
+
+.about .about-info {
+  flex-basis: 100%;
+  padding: 2rem;
+}
+
+.about .about-info .title {
+  font-size: 3rem;
+  font-weight: 300;
+  margin: 1rem 0;
+}
+
+.about .about-img {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.about .about-img .container {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.about .about-img .container img {
+  box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
   .main-header__nav {
     display: flex;
   }
@@ -422,6 +577,39 @@ ul#ui-id-2 {
 
   .search-container-mobile {
     display: none;
+  }
+
+  .landing .landing-img {
+    flex-basis: 35%;
+  }
+  
+  .landing .landing-info {
+    flex-basis: 65%;
+  }
+
+  .landing .landing-info .title {
+    font-size: 4rem;
+  }
+
+  .landing .landing-info .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .about .about-info {
+    flex-basis: 50%;
+  }
+  
+  .about .about-img {
+    padding: 3rem;
+    flex-basis: 50%;
+  }
+
+  .benefits {
+    margin-top: -5rem;
+  }
+
+  .benefits .benefit-card {
+    flex-basis: 30%;
   }
 }
 
