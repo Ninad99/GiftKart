@@ -6,7 +6,9 @@
   <%- include('../includes/navigation.ejs') %>
   <main>
     <% if (orders.length === 0) { %>
-      <h2>No orders to show</h2>
+      <div class="centered">
+        <h1>No orders placed!</h1>
+      </div>
     <% } else { %>
       <ul class="orders-list">
         <% orders.forEach(order => { %>
