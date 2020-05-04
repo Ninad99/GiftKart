@@ -190,7 +190,7 @@ exports.postReset = (req, res, next) => {
           return res.render('auth/reset-password', {
             path: '/reset',
             pageTitle: 'Reset Password',
-            errorMessage: `There is no account corresponding to ${req.body.email}!`,
+            errorMessage: `There is no account corresponding to ${email}!`,
             userMessage: null
           });
         }
@@ -212,7 +212,7 @@ exports.postReset = (req, res, next) => {
           html: `
             <h2>Hello GIftKart User!</h2>
             <h4>You requested a password reset for ${email}</h4>
-            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
+            <p>Click this <a href="https://giftkart.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
             <p><em>If this request wasn't made by you then you can safely ignore this email.</em></p>
           `
         });
