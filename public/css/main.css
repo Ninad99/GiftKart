@@ -551,6 +551,10 @@ ul#ui-id-2 {
   width: 100%;
 }
 
+.errorpage-img {
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .main-header__nav {
     display: flex;
@@ -611,6 +615,10 @@ ul#ui-id-2 {
 
   .benefits .benefit-card {
     flex-basis: 30%;
+  }
+
+  .error-404-img {
+    width: 60%;
   }
 }
 
