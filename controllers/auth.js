@@ -14,6 +14,8 @@ const transporter = nodemailer.createTransport(
 );
 
 exports.getLogin = (req, res, next) => {
+  const redirectUrl = req.query.redirect;
+
   return res.render('auth/login', {
     pageTitle: 'Login',
     path: '/login',
@@ -22,7 +24,8 @@ exports.getLogin = (req, res, next) => {
       email: '',
       password: ''
     },
-    validationErrors: []
+    validationErrors: [],
+    redirectUrl: redirectUrl
   });
 };
 
@@ -43,6 +46,7 @@ exports.getSignup = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const redirectUrl = req.body.redirect;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -54,7 +58,8 @@ exports.postLogin = (req, res, next) => {
         email: email,
         password: password
       },
-      validationErrors: errors.array()
+      validationErrors: errors.array(),
+      redirectUrl: redirectUrl
     });
   }
   User.findOne({ email: email }).then(user => {
@@ -67,7 +72,10 @@ exports.postLogin = (req, res, next) => {
             req.session.user = user;
             return req.session.save(err => {
               if (!err) {
-                res.redirect('/');
+                if (redirectUrl) {
+                  return res.redirect(redirectUrl);
+                }
+                res.redirect('/products');
               } else {
                 console.log(err);
               }
@@ -81,7 +89,8 @@ exports.postLogin = (req, res, next) => {
                 email: email,
                 password: password
               },
-              validationErrors: []
+              validationErrors: [],
+              redirectUrl: redirectUrl
             });
           }
         })
@@ -97,7 +106,8 @@ exports.postLogin = (req, res, next) => {
           email: email,
           password: password
         },
-        validationErrors: []
+        validationErrors: [],
+        redirectUrl: redirectUrl
       });
     }
   });
