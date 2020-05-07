@@ -1,4 +1,7 @@
 <form action="/cart" method="POST">
+  <% if (redirect) { %>
+    <input type="hidden" name="redirect" value="<%= redirect %>">
+  <% } %>
   <input type="hidden" name="productId" value="<%= product._id %>">
   <input type="hidden" name="_csrf" value="<%= csrfToken %>" >
   <button type="submit" class="btn"><i class="fas fa-cart-plus"></i>&nbsp;Add to Cart</button>

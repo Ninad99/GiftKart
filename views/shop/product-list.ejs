@@ -43,7 +43,7 @@
 						<div class="card__actions">
 							<a href="/products/<%= product._id %>" class="btn"><i class="fas fa-info-circle"></i>&nbsp;Details</a>
 							<% if (isAuthenticated && !isAdmin) { %>
-							<%- include('../includes/add-to-cart.ejs', { product: product }) %>
+							<%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products' }) %>
 							<% } %>
 						</div>
 					</div>
