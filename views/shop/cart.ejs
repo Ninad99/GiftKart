@@ -5,7 +5,7 @@
 </head>
 
 <body>
-  <%- include('../includes/navigation.ejs') %>
+  <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
   <main>
     <% if (products.length > 0) { %>
       <ul class="cart-list">
@@ -16,7 +16,7 @@
                 <img src="<%= p.productId.imageUrl %>" alt="<%= p.productId.title %>">
               </div>
               <div class="cart-list-item--info">
-                <h3><%= p.productId.title %></h3>
+                <a href="/products/<%= p.productId._id %>"><h3><%= p.productId.title %></h3></a>
                 <h5>Quantity - <%= p.quantity %></h5>
                 <h4>&#8377; <%= p.productId.price * p.quantity %></h4>
               </div>

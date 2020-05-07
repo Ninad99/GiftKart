@@ -67,6 +67,11 @@ app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.isAdmin = req.session.isAdmin;
   res.locals.csrfToken = req.csrfToken();
+  if (req.user) {
+    res.locals.cartItems = req.user.cart.items.length;
+  } else {
+    res.locals.cartItems = 0;
+  }
   next();
 });
 
@@ -76,6 +81,7 @@ app.use(shopRoutes);
 app.use(errorController.get404);
 
 app.use((err, req, res, next) => {
+  console.log(err);
   return res.status(500).render('500', {
     pageTitle: 'Error!',
     path: '/500'

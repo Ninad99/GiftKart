@@ -36,7 +36,9 @@
             <% } else { %>
                 <% if (isAuthenticated && !isAdmin) { %>
                     <li class="main-header__item">
-                        <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a>
+                        <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">
+                            <i class="fas fa-shopping-cart"></i>&nbsp;Cart (<%= cartItems %>)
+                        </a>
                     </li>
                     <li class="main-header__item">
                         <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders"><i class="fas fa-list-ul"></i>&nbsp;Orders</a>
