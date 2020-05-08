@@ -1,18 +1,24 @@
-.products-container {
-  display: flex;
-  margin-left: 300px;
+.main-container {
+  width: 100%;
+  position: relative;
 }
 
-.filter-container{
+.products-container {
+  display: inline-block;
+  width: 75%;
+  vertical-align: top;
+}
+
+.filter-container {
   background-color: var(--color-text-white);
-  width: 20vw;
-  font-size: small;
-  min-width: 300px;
-  display: block;
-  position: fixed;
-  top: 7.5%;
+  display: inline-block;
+  vertical-align: top;
+  position: sticky;
+  top: 7%;
   left: 0;
-  z-index: 1;
+  font-size: small;
+  width: 24%;
+  padding: .75rem .5rem;
 }
 
 .product-form {
@@ -86,6 +92,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .products-container {
+    width: 100%;
+  }
+
   .orders-list__item {
     font-size: 87.5%;
   }

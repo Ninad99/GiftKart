@@ -6,7 +6,7 @@
 
 <body>
 	<%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
-	<main style="position: relative;">
+	<main>
 		
 		<!-- this is modal -->
 		<div id="modal_container" class="modal-container">
@@ -19,40 +19,42 @@
 			</div>
 		</div>
 
-		<!-- this is side form -->
-		<div class="filter-container side-form" id="filter_container">
-			<%- include('../includes/filter-form.ejs') %>
-		</div>
-
-		<!-- this is rest products-page -->
-		<div class="products-container">
-			<% if (prods.length > 0) { %>
-			<div class="grid">
-				<% for (let product of prods) { %>
-				<article class="card product-item">
-					<div class="card__image">
-						<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
-					</div>
-					<div style="padding: .5rem 0">
-						<div class="card__header">
-							<h1 class="product__title"><%= product.title %></h1>
+		<div class="main-container">
+			<!-- this is side form -->
+			<div class="filter-container side-form" id="filter_container">
+				<%- include('../includes/filter-form.ejs') %>
+			</div>
+			
+			<!-- this is rest products-page -->
+			<div class="products-container">
+				<% if (prods.length > 0) { %>
+				<div class="grid">
+					<% for (let product of prods) { %>
+					<article class="card product-item">
+						<div class="card__image">
+							<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
 						</div>
-						<div class="card__content">
-							<h3 class="product__price">&#8377; <%= product.price %></h3>
+						<div style="padding: .5rem 0">
+							<div class="card__header">
+								<h1 class="product__title"><%= product.title %></h1>
+							</div>
+							<div class="card__content">
+								<h3 class="product__price">&#8377; <%= product.price %></h3>
+							</div>
+							<div class="card__actions">
+								<a href="/products/<%= product._id %>" class="btn"><i class="fas fa-info-circle"></i>&nbsp;Details</a>
+								<% if (isAuthenticated && !isAdmin) { %>
+								<%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products' }) %>
+								<% } %>
+							</div>
 						</div>
-						<div class="card__actions">
-							<a href="/products/<%= product._id %>" class="btn"><i class="fas fa-info-circle"></i>&nbsp;Details</a>
-							<% if (isAuthenticated && !isAdmin) { %>
-							<%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products' }) %>
-							<% } %>
-						</div>
-					</div>
-				</article>
+					</article>
+					<% } %>
+				</div>
+				<% } else { %>
+				<h1>No products found!</h1>
 				<% } %>
 			</div>
-			<% } else { %>
-			<h1>No products found!</h1>
-			<% } %>
 		</div>
 	</main>
 	<script>
