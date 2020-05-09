@@ -1,7 +1,17 @@
 const { validationResult } = require('express-validator');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
+
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: process.env.SENDGRID_API_KEY
+    }
+  })
+);
 
 exports.getIndex = (req, res, next) => {
   return res.render('shop/index', {
@@ -110,6 +120,8 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postOrder = (req, res, next) => {
   const { name, house, street, city, PIN } = req.body;
   const totalAmount = req.body.totalamount;
+  const email = req.user.email;
+  let orderId, orderItems;
 
   const errors = validationResult(req);
 
@@ -164,13 +176,33 @@ exports.postOrder = (req, res, next) => {
             pin: parseInt(PIN)
           }
         });
+        orderItems = products;
         return order.save();
       })
       .then(result => {
+        orderId = result._id.toString();
         return req.user.clearCart();
       })
       .then(() => {
         res.redirect('/orders');
+        let listItems = ``;
+        orderItems.forEach(product => {
+          listItems += `<li>${product.productData.title} (${product.quantity})</li>`;
+        });
+        transporter.sendMail({
+          to: email,
+          from: 'admin@giftkart.com',
+          subject: 'Order placed successfully!',
+          html: `
+          <h2>Hello ${name}!</h2>
+          <h4>Your order has been placed successfully!</h4>
+          <p>The order ID is ${orderId}.</p>
+          <p>The items in your order are:</p>
+          <ul>
+          ${listItems}
+          </ul>
+          `
+        });
       })
       .catch(err => {
         console.log(err);
