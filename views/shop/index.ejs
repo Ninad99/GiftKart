@@ -19,20 +19,23 @@
     </div>
   </section>
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin-top: -.25rem;"><path fill="#303F9F" fill-opacity="1" d="M0,96L48,101.3C96,107,192,117,288,128C384,139,480,149,576,149.3C672,149,768,139,864,112C960,85,1056,43,1152,32C1248,21,1344,43,1392,53.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
-  <div class="benefits">
+  <section class="benefits">
     <div class="benefit-card">
-      <i class="card-icon fas fa-truck fa-4x"></i>
-      <h2>Free shipping</h2>
+      <i class="card-icon fas fa-truck fa-3x"></i>
+      <h2>Free Shipping</h2>
+      <p>Concentrate on getting the gift, delivery is on us!</p>
     </div>
     <div class="benefit-card">
-      <i class="card-icon fas fa-exchange-alt fa-4x"></i>
-      <h2>15 day returns</h2>
+      <i class="card-icon fas fa-exchange-alt fa-3x"></i>
+      <h2>15 Day Returns</h2>
+      <p>If it doesn't satisfy you, we take it back, no questions asked!</p>
     </div>
     <div class="benefit-card">
-      <i class="card-icon fas fa-user-shield fa-4x"></i>
-      <h2>Secure shopping experience</h2>
+      <i class="card-icon fas fa-user-shield fa-3x"></i>
+      <h2>Secure Shopping Experience</h2>
+      <p>All your credentials and transactions are encrypted, ensuring maximum security!</p>
     </div>
-  </div>
+  </section>
   <section class="about">
     <div class="about-info">
       <h2 class="title">Why GiftKart?</h2>
@@ -40,13 +43,59 @@
         Gift giving is hard. Most of us want to find the perfect gift for the special people in our lives, but have no idea where to begin. We purchase something we're sure will delight, but it doesn't. Or we wait until the last minute and end up buying something in a panic.
         <br/><br/>Gift giving is a worldwide tradition, yet it stumps many of us. Hence, we have created GiftKart, a website where you can get recommendations on different types of gifts you can give, as well as a platform to purchase them right away!
       </p>
-      <a href="/products" class="btn">View Products</a>
+      <a href="/products" class="btn">View Products &#10230;</a>
     </div>
     <div class="about-img">
       <div class="container">
         <img src="/img/ben-white-vJz7tkHncFk-unsplash.jpg" alt="gifts">
       </div>
       <span style="font-size: .75rem; color: #888;">Photo by <a href="https://unsplash.com/@benwhitephotography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ben White</a> on <a href="/s/photos/person-giving-gifts?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+    </div>
+  </section>
+  <section class="recipient">
+    <h2>Gifts by recipient</h2>
+    <div class="links-row">
+      <a href="/recommend-products?category=men">
+        <div class="recipient-item men">
+          <img src="/img/man.jpg" alt="men">
+          <p>For Men</p>
+        </div>
+      </a>
+      <a href="/recommend-products?category=women">
+        <div class="recipient-item women">
+          <img src="/img/woman.jpg" alt="women">
+          <p>For Women</p>
+        </div>
+      </a>
+      <a href="/recommend-products?category=kids">
+        <div class="recipient-item kids">
+          <img src="/img/kid.jpg" alt="kids">
+          <p>For Kids</p>
+        </div>
+      </a>
+    </div>
+  </section>
+  <section class="occasion">
+    <h2>Gifts by occassion</h2>
+    <div class="links-row">
+      <a href="/recommend-products?category=birthday">
+        <div class="occasion-item birthday">
+          <img src="/img/birthday.jpg" alt="birthday">
+          <p>Birthday</p>
+        </div>
+      </a>
+      <a href="/recommend-products?category=marriage">
+        <div class="occasion-item marriage">
+          <img src="/img/marriage.jpg" alt="marriage">
+          <p>Marriage</p>
+        </div>
+      </a>
+      <a href="/recommend-products?category=other">
+        <div class="occasion-item other">
+          <img src="/img/other.jpg" alt="other">
+          <p>Other</p>
+        </div>
+      </a>
     </div>
   </section>
   <%- include('../includes/end.ejs') %>

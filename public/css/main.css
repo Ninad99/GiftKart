@@ -26,7 +26,7 @@ main {
   padding: 1rem;
   margin: auto;
   margin-top: 3.5rem;
-  min-height: 65vh;
+  min-height: 82vh;
 }
 
 form {
@@ -503,6 +503,8 @@ ul#ui-id-2 {
   margin: .5rem;
   padding: 1.5rem;
   text-align: center;
+  border: 1px solid var(--color-primary-light);
+  border-radius: 3px;
 }
 
 .benefits .benefit-card .card-icon {
@@ -510,8 +512,12 @@ ul#ui-id-2 {
 }
 
 .benefits .benefit-card h2 {
-  font-weight: 400;
-  font-size: 1.2rem;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.benefits .benefit-card p {
+  font-size: .9rem;
 }
 
 .about {
@@ -527,7 +533,7 @@ ul#ui-id-2 {
 }
 
 .about .about-info .title {
-  font-size: 3rem;
+  font-size: 2.75rem;
   font-weight: 300;
   margin: 1rem 0;
 }
@@ -547,12 +553,71 @@ ul#ui-id-2 {
 }
 
 .about .about-img .container img {
-  box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
   width: 100%;
 }
 
 .errorpage-img {
   width: 100%;
+}
+
+.recipient,
+.occasion {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.recipient h2,
+.occasion h2 {
+  font-size: 2.75rem;
+  font-weight: 300;
+  margin: 1rem 0;
+}
+
+.recipient .links-row,
+.occasion .links-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.recipient .links-row a,
+.occasion .links-row a {
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+.recipient .links-row .recipient-item,
+.occasion .links-row .occasion-item {
+  margin: 1rem;
+  width: 300px;
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid transparent;
+  transition: all .2s ease-out;
+}
+
+.recipient .links-row .recipient-item:hover,
+.occasion .links-row .occasion-item:hover {
+  border: 1px solid var(--color-primary-light);
+  box-shadow: 2px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.recipient .links-row .recipient-item img,
+.occasion .links-row .occasion-item img {
+  width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .benefits .benefit-card {
+    flex-basis: 30%;
+  }
 }
 
 @media screen and (min-width: 768px) {
@@ -614,6 +679,11 @@ ul#ui-id-2 {
   }
 
   .benefits .benefit-card {
+    flex-basis: 22.5%;
+  }
+
+  .recipient .links-row .recipient-item,
+  .occasion .links-row .occasion-item {
     flex-basis: 30%;
   }
 

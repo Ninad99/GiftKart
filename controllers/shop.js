@@ -310,9 +310,13 @@ exports.searchProducts = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
+// needs to be updated
 exports.getRecommendProductIndex = (req, res, next) => {
+  const category = req.query.category || null;
+
   return res.render('shop/recommend-product-index', {
     pageTitle: 'GiftKart | Recommend Product',
-    path: '/recommend-products'
+    path: '/recommend-products',
+    category: category
   });
 };
