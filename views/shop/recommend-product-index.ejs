@@ -6,6 +6,9 @@
 <body>
   <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
   <main>
-    <%- include('../includes/filter-form.ejs') %>
+    <p class="page-header centered"><strong>GiftKart</strong> | Recommendation</p>
+    <% if (category) { %>
+      <p class="centered">Recommend stuff for <%= category %></p>
+    <% } %>
   </main>
   <%- include('../includes/end.ejs') %>
