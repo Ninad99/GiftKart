@@ -310,13 +310,38 @@ exports.searchProducts = (req, res, next) => {
     .catch(err => console.log(err));
 };
 
-// needs to be updated
 exports.getRecommendProductIndex = (req, res, next) => {
   const category = req.query.category || null;
 
-  return res.render('shop/recommend-product-index', {
-    pageTitle: 'GiftKart | Recommend Product',
-    path: '/recommend-products',
-    category: category
-  });
+  if (!category) {
+    return res.redirect('/products');
+  }
+
+  let query = {};
+
+  if (category === 'men' || category === 'women' || category === 'kids') {
+    query['gender'] = [category, 'B'];
+  }
+
+  if (
+    category === 'birthday' ||
+    category === 'marriage' ||
+    category === 'other'
+  ) {
+    query['occasion'] = category;
+  }
+
+  Product.find(query)
+    .then(products => {
+      return res.render('shop/recommend-product-index', {
+        pageTitle: 'GiftKart | Recommend Product',
+        path: '/recommend-products',
+        category: category,
+        prods: products
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return next(err);
+    });
 };
