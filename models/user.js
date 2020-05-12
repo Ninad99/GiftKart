@@ -59,11 +59,13 @@ userSchema.methods.addToCart = function(product) {
 
 userSchema.methods.removeFromCart = function(productId) {
   const updatedCartItems = this.cart.items.filter(item => {
-    Product.findById(item.productId)
-    .then(product => {
-      product.quantity = product.quantity + item.quantity;
-			  product.save().then(result => {})
-    })
+    if(item.productId.toString() === productId.toString()){
+      Product.findById(item.productId)
+      .then(product => {
+        product.quantity = product.quantity + item.quantity;
+          product.save().then(result => {})
+      })
+    }
     return item.productId.toString() !== productId.toString();
   })
   this.cart.items = updatedCartItems;
