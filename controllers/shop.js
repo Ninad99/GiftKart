@@ -97,22 +97,12 @@ exports.postCart = (req, res, next) => {
 
   Product.findById(prodID)
     .then(product => {
-      product.title = product.title;
-			product.price = product.price;
-			product.description = product.description;
-			product.imageUrl = product.imageUrl;
-      product.category = product.category;
       if(product.quantity > 0){
         product.quantity = product.quantity - 1;
       }
-			product.ages.min = product.ages.min;
-			product.ages.max = product.ages.max;
-			product.gender = product.gender;
-			product.occasion = product.occasion;
-			  product.save()
-				.then(result => {
-					return req.user.addToCart(product);
-				})
+			product.save()
+			.then(result => {})
+      return req.user.addToCart(product);
     })
     .then(result => {
       if (redirectTo) {
