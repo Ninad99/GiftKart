@@ -94,9 +94,16 @@ exports.getCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
   const prodID = req.body.productId;
   const redirectTo = req.body.redirect;
+
   Product.findById(prodID)
     .then(product => {
-      return req.user.addToCart(product);
+      if(product.quantity > 0){
+        product.quantity = product.quantity - 1;
+      }
+      return product.save()
+    })
+    .then(result => {
+      return req.user.addToCart(result);
     })
     .then(result => {
       if (redirectTo) {
