@@ -1,14 +1,40 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/auth.css">
+<link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
   <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
   <main>
-    <p class="page-header centered"><strong>GiftKart</strong> | Recommendation</p>
+    <p class="page-header centered"><strong>GiftKart</strong> | Recommendations</p>
     <% if (category) { %>
-      <p class="centered">Recommend stuff for <%= category %></p>
+      <p class="centered">Recommended gifts for <%= category %></p>
+      <% if (prods.length > 0) { %>
+				<div class="grid">
+					<% for (let product of prods) { %>
+					<article class="card product-item">
+						<div class="card__image">
+							<img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+						</div>
+						<div style="padding: .5rem 0">
+							<div class="card__header">
+								<h1 class="product__title"><%= product.title %></h1>
+							</div>
+							<div class="card__content">
+								<h3 class="product__price">&#8377; <%= product.price %></h3>
+							</div>
+							<div class="card__actions">
+								<a href="/products/<%= product._id %>" class="btn"><i class="fas fa-info-circle"></i>&nbsp;Details</a>
+								<% if (isAuthenticated && !isAdmin) { %>
+								<%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products' }) %>
+								<% } %>
+							</div>
+						</div>
+					</article>
+					<% } %>
+				</div>
+				<% } else { %>
+          <h3>No products found!</h3>
+				<% } %>
     <% } %>
   </main>
   <%- include('../includes/end.ejs') %>
