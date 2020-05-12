@@ -63,7 +63,7 @@ userSchema.methods.removeFromCart = function(productId) {
       Product.findById(item.productId)
       .then(product => {
         product.quantity = product.quantity + item.quantity;
-          product.save().then(result => {})
+        product.save();
       })
     }
     return item.productId.toString() !== productId.toString();
