@@ -100,8 +100,9 @@ exports.postCart = (req, res, next) => {
       if(product.quantity > 0){
         product.quantity = product.quantity - 1;
       }
-			product.save()
-			.then(result => {})
+      return product.save()
+    })
+    .then(result => {
       return req.user.addToCart(product);
     })
     .then(result => {
