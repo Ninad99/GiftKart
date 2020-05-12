@@ -94,9 +94,25 @@ exports.getCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
   const prodID = req.body.productId;
   const redirectTo = req.body.redirect;
+
   Product.findById(prodID)
     .then(product => {
-      return req.user.addToCart(product);
+      product.title = product.title;
+			product.price = product.price;
+			product.description = product.description;
+			product.imageUrl = product.imageUrl;
+      product.category = product.category;
+      if(product.quantity > 0){
+        product.quantity = product.quantity - 1;
+      }
+			product.ages.min = product.ages.min;
+			product.ages.max = product.ages.max;
+			product.gender = product.gender;
+			product.occasion = product.occasion;
+			  product.save()
+				.then(result => {
+					return req.user.addToCart(product);
+				})
     })
     .then(result => {
       if (redirectTo) {
