@@ -103,7 +103,7 @@ exports.postCart = (req, res, next) => {
       return product.save()
     })
     .then(result => {
-      return req.user.addToCart(product);
+      return req.user.addToCart(result);
     })
     .then(result => {
       if (redirectTo) {
