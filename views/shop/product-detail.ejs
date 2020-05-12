@@ -12,10 +12,19 @@
             </div>
             <div class="detail-info">
                 <h1><%= product.title %></h1>
+                <% if(product.quantity > 0 ){%>
+                    <p>We currently have <strong><%= product.quantity %></strong> item(s) in Stock</p>
+                <% }else { %>
+                    <h3>This item is currently out of stock</h3>
+                <% } %>
                 <p><%= product.description %></p>
                 <h2>&#8377; <%= product.price %></h2>
                 <% if (isAuthenticated && !isAdmin) { %>
-                    <%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products/' + product._id }) %>
+                    <% if(product.quantity > 0 ) { %>
+                        <%- include('../includes/add-to-cart.ejs', { product: product, redirect: '/products/' + product._id }) %>
+                    <% } else { %>
+                        <a class="btn accent filled">Notify me</a>
+                    <% } %>
                 <% } else { %>
                     <a class="btn" href="/login?redirect=/products/<%= product._id %>"><i class="fas fa-cart-plus"></i>&nbsp;Login to Add to Cart</a>
                 <% } %>
