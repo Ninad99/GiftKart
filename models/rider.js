@@ -12,7 +12,7 @@ const riderSchema = new Schema({
   },
   assignedOrders: [
     {
-      orderId: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'Order'
     }
   ],
