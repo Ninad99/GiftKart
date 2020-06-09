@@ -1,0 +1,27 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main>
+    <p class="page-header centered"><strong>GiftKart</strong> | Rider Portal</p>
+
+    <div class="grid">
+      <% if (assignedOrders.length > 0) { %>
+      <% for (let assignedOrder of assignedOrders) { %>
+      <article class="card product-item">
+        <div class="card__image">
+          <p>gg</p>
+        </div>
+      </article>
+      <% } %>
+    </div>
+    <% } else { %>
+    <h1>No assignedOrders found!</h1>
+    <% } %>
+    <h1><%= completedOrders %></h1>
+  </main>
+  <%- include('../includes/end.ejs') %>

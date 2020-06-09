@@ -7,15 +7,14 @@
   <%- include('../includes/navigation.ejs') %>
 
   <main>
-    <p class="page-header centered"><strong>GiftKart</strong> | Login</p>
-    <form class="login-form" action="/login" method="POST">
+    <p class="page-header centered"><strong>GiftKart</strong> | Rider Login</p>
+    <form class="login-form" action="/rider/login" method="POST">
       <% if (errorMessage) { %>
-          <div class="user-message user-message--error"><%= errorMessage %></div>
+        <div class="user-message user-message--error"><%= errorMessage %></div>
       <% } %>
       <div class="form-control">
         <label for="email">Email</label>
         <input
-          class="<%= validationErrors.find(e => e.param === 'email') ? 'invalid' : '' %>"
           type="email"
           name="email"
           id="email"
@@ -23,27 +22,19 @@
       </div>
       <div class="form-control">
         <label for="password">Password</label>
-        <input 
-					class="<%= validationErrors.find(e => e.param === 'password') ? 'invalid' : '' %>" 
+        <input
           type="password"
-          name="password" 
-          id="password" 
+          name="password"
+          id="password"
           value="<%= oldInput.password %>">
           <span class="p-viewer password-view-inactive" id="eye">
             <i class="fas fa-eye"></i>
           </span>
       </div>
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <% if (redirectUrl) { %>
-        <input type="hidden" name="redirect" value="<%= redirectUrl %>">
-      <% } %>
-      <button style="margin-right: 1rem;" class="btn" type="submit">Login</button>
-      <div style="margin-top: 1rem;"><a href="/reset">Reset Password</a></div>
+      <button style="margin-bottom: 1rem;" class="btn" type="submit">Login as Rider</button>
+      <a href="/login" class="btn accent filled" type="button">User Login</a>
     </form>
-    <div class="centered">
-      <a href="/admin/login" class="btn filled" type="button">Admin Login</a>
-      <a href="/rider/login" class="btn filled" type="button">Rider Login</a>
-    </div>
   </main>
   <script>
     var eye = document.getElementById('eye');
@@ -59,4 +50,4 @@
       }
     });
   </script>
-  <%- include('../includes/end.ejs') %>
+<%- include('../includes/end.ejs') %>

@@ -6,19 +6,25 @@
 <body>
   <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
   <section class="landing">
-    <div class="landing-img">
-      <div class="container">
-        <img src="/img/landing-img.svg" alt="giftkart" />
+    <div class="landing-cover-img"></div>
+    <div class="landing-cover-content">
+      <div class="landing-info">
+        <h1 class="title">Find the perfect gift!</h1>
+        <p class="subtitle">Giving a gift is easy. Finding a gift is hard. We're here to help you with it.</p>
+        <div class="search-container-web" id="search-container-web">
+          <form action="/search-products" method="POST">
+            <div style="display: flex; align-items: center;" class="form-control">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input style="margin: 8px; width: 100%; height: 1.725rem;" name="query" id="search-web">
+              <button class="btn-search" type="submit">Search</button>
+            </div>
+          </form>
+        </div>
+        <a class="btn accent filled" style="margin: .5rem;" href="/products">View Products</a>
+        <a class="btn accent" href="/recommend-products">Recommendations</a>
       </div>
     </div>
-    <div class="landing-info">
-      <h1 class="title">Find the perfect gift!</h1>
-      <p class="subtitle">Giving a gift is easy. Finding a gift is hard. We're here to help you with it.</p>
-      <a class="btn accent filled" style="margin: .5rem;" href="/products">View Products</a>
-      <a class="btn accent" href="/recommend-products">Recommendations</a>
-    </div>
   </section>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" style="margin-top: -.25rem;"><path fill="#303F9F" fill-opacity="1" d="M0,96L48,101.3C96,107,192,117,288,128C384,139,480,149,576,149.3C672,149,768,139,864,112C960,85,1056,43,1152,32C1248,21,1344,43,1392,53.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
   <section class="benefits">
     <div class="benefit-card">
       <i class="card-icon fas fa-truck fa-3x"></i>
@@ -36,20 +42,29 @@
       <p>All your credentials and transactions are encrypted, ensuring maximum security!</p>
     </div>
   </section>
-  <section class="about">
-    <div class="about-info">
-      <h2 class="title">Why GiftKart?</h2>
-      <p>
-        Gift giving is hard. Most of us want to find the perfect gift for the special people in our lives, but have no idea where to begin. We purchase something we're sure will delight, but it doesn't. Or we wait until the last minute and end up buying something in a panic.
-        <br/><br/>Gift giving is a worldwide tradition, yet it stumps many of us. Hence, we have created GiftKart, a website where you can get recommendations on different types of gifts you can give, as well as a platform to purchase them right away!
-      </p>
-      <a href="/products" class="btn">View Products &#10230;</a>
-    </div>
-    <div class="about-img">
-      <div class="container">
-        <img src="/img/ben-white-vJz7tkHncFk-unsplash.jpg" alt="gifts">
+  <section class="about-fluid">
+    <div class="about">
+      <div class="about-info">
+        <h2 class="title">Why GiftKart?</h2>
+        <p>
+          Gift giving is hard. Most of us want to find the perfect gift for the special people in our lives, but have no
+          idea where to begin. We purchase something we're sure will delight, but it doesn't. Or we wait until the last
+          minute and end up buying something in a panic.
+          <br /><br />Gift giving is a worldwide tradition, yet it stumps many of us. Hence, we have created GiftKart, a
+          website where you can get recommendations on different types of gifts you can give, as well as a platform to
+          purchase them right away!
+        </p>
+        <a href="/products" class="btn accent filled">View Products &#10230;</a>
       </div>
-      <span style="font-size: .75rem; color: #888;">Photo by <a href="https://unsplash.com/@benwhitephotography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ben White</a> on <a href="/s/photos/person-giving-gifts?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+      <div class="about-img">
+        <div class="container">
+          <img src="/img/ben-white-vJz7tkHncFk-unsplash.jpg" alt="gifts">
+        </div>
+        <span style="font-size: .75rem; color: #888;">Photo by <a
+            href="https://unsplash.com/@benwhitephotography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Ben
+            White</a> on <a
+            href="/s/photos/person-giving-gifts?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+      </div>
     </div>
   </section>
   <section class="recipient">
@@ -75,7 +90,8 @@
       </a>
     </div>
   </section>
-  <section class="occasion">
+  <!-- <section class="occasion-fluid"> -->
+  <div class="occasion">
     <h2>Gifts by occassion</h2>
     <div class="links-row">
       <a href="/recommend-products?category=birthday">
@@ -96,6 +112,72 @@
           <p>Other</p>
         </div>
       </a>
+    </div>
+  </div>
+  <!-- </section> -->
+  <section class="testimonials">
+    <div class="testimonials-inner">
+      <h2>Testimonials</h2>
+      <div class="border"></div>
+      <div class="testimonials-inner-row">
+        <div class="testimonials-inner-col">
+          <div class="testimonial">
+            <img src="/img/faces/p1.jpg" alt="">
+            <div class="testimonials-inner-name">David Rousseau</div>
+            <div class="testimonials-inner-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <p>
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-left" aria-hidden="true"></i>
+              We were very satisfied with a very quick response and delivery, our new Dunoon mugs arriving safely in
+              perfect condition.
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-right" aria-hidden="true"></i>
+            </p>
+          </div>
+        </div>
+        <div class="testimonials-inner-col">
+          <div class="testimonial">
+            <img src="/img/faces/p2.jpeg" alt="">
+            <div class="testimonials-inner-name">Elizabeth D.</div>
+            <div class="testimonials-inner-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <p>
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-left" aria-hidden="true"></i>
+              I received my order today and I am very impressed with the quality! Thanks for doing an outstanding job! I
+              will not hesitate to recommend or use your services in the future!
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-right" aria-hidden="true"></i>
+            </p>
+          </div>
+        </div>
+        <div class="testimonials-inner-col">
+          <div class="testimonial">
+            <img src="/img/faces/p3.jpg" alt="">
+            <div class="testimonials-inner-name">Bill More</div>
+            <div class="testimonials-inner-stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <p>
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-left" aria-hidden="true"></i>
+              My order was received in a timely manner, even though, due to the coronavirus, deliveries have been
+              disrupted. I am very please with my purchase.
+              <i style="color: var(--color-primary-dark);" class="fa fa-quote-right" aria-hidden="true"></i>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
   <%- include('../includes/end.ejs') %>

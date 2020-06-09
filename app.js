@@ -28,6 +28,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
+const riderRoutes = require('./routes/rider');
 const authRoutes = require('./routes/auth');
 const shopRoutes = require('./routes/shop');
 
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
   res.locals.isAdmin = req.session.isAdmin;
+  res.locals.isRider = req.session.isRider;
   res.locals.csrfToken = req.csrfToken();
   if (req.user) {
     res.locals.cartItems = req.user.cart.items.length;
@@ -76,6 +78,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/admin', adminRoutes);
+app.use('/rider', riderRoutes);
 app.use(authRoutes);
 app.use(shopRoutes);
 app.use(errorController.get404);
