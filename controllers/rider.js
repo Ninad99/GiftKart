@@ -85,13 +85,12 @@ exports.postRiderLogin = async (req, res, next) => {
   }
 };
 
-exports.postRiderSignup = (req, res, next) => {
+exports.postRiderSignup = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log('fucks');
     return res.status(422).render('rider/rider-signup', {
       path: 'rider/signup',
       pageTitle: 'Signup',
@@ -105,50 +104,45 @@ exports.postRiderSignup = (req, res, next) => {
     });
   }
 
-  bcrypt
-    .hash(password, 12)
-    .then(hashedPassword => {
-      const rider = new Rider({
-        email: email,
-        password: hashedPassword
-      });
-      return rider.save();
-    })
-    .then(rider => {
-      req.session.isLoggedIn = true;
-      req.session.rider = rider;
-      req.session.isRider = true;
-      return req.session.save(err => {
-        if (!err) {
-          res.redirect('/rider/rider-portal');
-        } else {
-          console.log(err);
-        }
-      });
-    })
-    .then(result => {
-      return transporter.sendMail({
-        to: email,
-        from: 'admin@giftkart.com',
-        subject: 'Welcome to GiftKart!',
-        html: `
-        <h2>You signed up successfully as a GiftKart Rider!</h2>
-        <p>We are delighted to have you as our Rider!</p>
-      `
-      });
-    })
-    .catch(err => console.log(err));
+  try {
+    const hashedPassword = await bcrypt.hash(password, 12);
+    const rider = new Rider({ email: email, password: hashedPassword });
+
+    await rider.save();
+
+    req.session.isLoggedIn = true;
+    req.session.rider = rider;
+    req.session.isRider = true;
+
+    await req.session.save();
+    res.redirect('/rider/rider-portal');
+
+    transporter.sendMail({
+      to: email,
+      from: 'admin@giftkart.com',
+      subject: 'Welcome to GiftKart!',
+      html: `
+      <h2>You signed up successfully as a GiftKart Rider!</h2>
+      <p>We are delighted to have you as our Rider!</p>
+    `
+    });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
 };
 
-exports.getRiderPortal = (req, res, next) => {
-  Rider.findOne({ _id: req.session.rider._id })
-    .then(rider => {
-      return res.render('rider/rider-portal', {
-        completedOrders: rider.completedOrders,
-        assignedOrders: rider.assignedOrders,
-        pageTitle: 'GiftKart | Rider portal',
-        path: 'rider/rider-portal'
-      });
-    })
-    .catch(err => console.log(err));
+exports.getRiderPortal = async (req, res, next) => {
+  try {
+    const rider = await Rider.findOne({ _id: req.session.rider._id });
+    return res.render('rider/rider-portal', {
+      completedOrders: rider.completedOrders,
+      assignedOrders: rider.assignedOrders,
+      pageTitle: 'GiftKart | Rider portal',
+      path: 'rider/rider-portal'
+    });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
 };
