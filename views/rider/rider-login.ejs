@@ -1,0 +1,52 @@
+<%- include('../includes/head.ejs') %>
+  <link rel="stylesheet" href="/css/forms.css">
+  <link rel="stylesheet" href="/css/auth.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+
+  <main>
+    <p class="page-header centered"><strong>GiftKart</strong> | Rider Login</p>
+    <form class="login-form" action="/rider/login" method="POST">
+      <% if (errorMessage) { %>
+        <div class="user-message user-message--error"><%= errorMessage %></div>
+      <% } %>
+      <div class="form-control">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value="<%= oldInput.email %>">
+      </div>
+      <div class="form-control">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          value="<%= oldInput.password %>">
+          <span class="p-viewer password-view-inactive" id="eye">
+            <i class="fas fa-eye"></i>
+          </span>
+      </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <button style="margin-bottom: 1rem;" class="btn" type="submit">Login as Rider</button>
+    </form>
+  </main>
+  <script>
+    var eye = document.getElementById('eye');
+    var passwordInput = document.getElementById("password");
+    eye.addEventListener('click', function () {
+      eye.classList.toggle('password-view-inactive')
+      eye.classList.toggle('password-view-active');
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+      } else {
+        passwordInput.type = "password";
+      }
+    });
+  </script>
+<%- include('../includes/end.ejs') %>
