@@ -34,7 +34,7 @@
                 <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup"><i class="fas fa-user-plus"></i>&nbsp;Signup</a>
             </li>
             <% } else { %>
-                <% if (isAuthenticated && !isAdmin) { %>
+                <% if (isAuthenticated && !isAdmin && !isRider) { %>
                     <li class="main-header__item">
                         <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">
                             <i class="fas fa-shopping-cart"></i>&nbsp;Cart (<%= cartItems %>)
@@ -91,7 +91,7 @@
         <li class="mobile-nav__item">
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products"><i class="fas fa-gifts"></i>&nbsp;Products</a>
         </li>
-        <% if (isAuthenticated && !isAdmin) { %>
+        <% if (isAuthenticated && !isAdmin && !isRider) { %>
         <li class="mobile-nav__item">
             <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart"><i class="fas fa-shopping-cart"></i>&nbsp;Cart</a>
         </li>

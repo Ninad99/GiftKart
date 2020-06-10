@@ -88,4 +88,7 @@ router.get('/orders', isAdmin, adminController.getAdminOrders);
 // /change-order-status -> POST
 router.post('/change-order-status', isAdmin, adminController.postAdminOrderStatus);
 
+// /order/orderId -> GET
+router.get('/orders/:orderId', isAdmin, adminController.getOrderDetails);
+
 module.exports = router;

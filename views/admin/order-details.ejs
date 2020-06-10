@@ -1,0 +1,65 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+  <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
+  <main>
+    <div class="order-details-container">
+      <div class="orders-list__item">
+        <h3>Order #<%= order._id %></h3>
+        <ul>
+          <% order.products.forEach(p => { %>
+          <li>
+            <%= p.productData.title %> (<%= p.quantity %>)
+          </li>
+          <% }); %>
+        </ul>
+        <h4>Total amount - &#8377;<%= order.totalAmount %></h4>
+        <hr />
+        <h4>
+          Order Status:
+          <% if (order.status === 'placed') { %>
+          <span style="color: #3F51B5;">Order placed</span>
+          <% } else if (order.status === 'transit') { %>
+          <strong style="color: #FF9800;">In transit</strong>
+          <% } else if (order.status === 'delivered') { %>
+          <strong style="color: green;">Delivered</strong>
+          <% } else if (order.status === 'cancelled') { %>
+          <strong style="color: red;">Cancelled</strong>
+          <% } %>
+        </h4>
+        <h4>Shipping address:</h4>
+        <p>
+          <strong><%= order.address.name %></strong><br />
+          <%= order.address.house %>,<br />
+          <%= order.address.street %>,<br />
+          <%= order.address.city %>,<br />
+          <%= order.address.pin %>
+        </p>
+        <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+      </div>
+      <% if (order.status === 'placed' || order.status === 'transit') { %>
+      <div class="rider-list">
+        <% if (riders.length > 0) { %>
+        <ul class="orders-list">
+          <% for( let rider of riders) { %>
+          <li class="orders-list__item">
+            <h3>Rider #<%= rider._id %></h3>
+            <p>Rider Email: <strong><%= rider.email %></strong></p>
+            <p>Rider Phone: <strong><%= rider.password.length %></strong></p>
+            <p>Assigned Orders: <strong><%= rider.assignedOrders.length %></strong></p>
+            <p>Completed Orders: <strong><%= rider.completedOrders %></strong></p>
+            <button class="btn">Assign this Rider</button>
+          </li>
+          <% } %>
+        </ul>
+        <% } else { %>
+        <h1>No Riders Found!</h1>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('../includes/end.ejs') %>

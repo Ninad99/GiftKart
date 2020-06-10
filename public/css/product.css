@@ -91,6 +91,17 @@
   margin: .5rem 0;
 }
 
+.order-details-container {
+  display: flex; 
+  justify-content: space-around;
+}
+
+.order-details-container .rider-list{
+  height: 70vh;
+  overflow: scroll; 
+  overflow-x: hidden;
+}
+
 @media screen and (max-width: 768px) {
   .products-container {
     width: 100%;
@@ -112,5 +123,11 @@
   .detail-info {
     flex-basis: 100%;
     padding: 0 .75rem;
+  }
+
+  .order-details-container {
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
