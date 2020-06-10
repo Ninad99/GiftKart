@@ -39,7 +39,7 @@
         </p>
         <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
       </div>
-      <% if (order.status === 'placed' || order.status === 'transit') { %>
+      <% if ( order.status === 'placed') { %>
       <div class="rider-list">
         <% if (riders.length > 0) { %>
         <ul class="orders-list">
@@ -50,7 +50,12 @@
             <p>Rider Phone: <strong><%= rider.password.length %></strong></p>
             <p>Assigned Orders: <strong><%= rider.assignedOrders.length %></strong></p>
             <p>Completed Orders: <strong><%= rider.completedOrders %></strong></p>
-            <button class="btn">Assign this Rider</button>
+            <form action="/admin/assign-order-rider" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" value="<%= rider._id %>" name="riderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button class="btn" type="submit">Assign this Rider</button>
+            </form>
           </li>
           <% } %>
         </ul>

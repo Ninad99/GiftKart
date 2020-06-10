@@ -330,3 +330,28 @@ exports.getOrderDetails = async (req, res, next) => {
 		return next(err);
 	}
 }
+
+exports.assignOrderToRider = async (req, res, next) => {
+	let orderId = req.body.orderId;
+	let riderId = req.body.riderId;
+
+	try{
+		const order = await Order.findById(orderId);
+		let rider = await Rider.findById(riderId);
+
+		let newAssignedOrders = [...rider.assignedOrders];
+		newAssignedOrders.push(orderId);
+		rider.assignedOrders = newAssignedOrders;
+
+		order.status = 'transit';
+
+		await order.save();
+		await rider.save();
+
+		return res.redirect(`/admin/orders/${orderId}`);
+	}
+	catch(err){
+		console.log(err);
+		return next(err);
+	}
+}
