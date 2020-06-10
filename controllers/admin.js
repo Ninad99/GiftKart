@@ -4,6 +4,7 @@ const { validationResult } = require('express-validator');
 const Admin = require("../models/admin");
 const Product = require("../models/product");
 const Order = require('../models/order');
+const Rider = require('../models/rider')
 
 exports.getUploadProduct = (req, res, next) => {
 	return res.render("admin/add-product", {
@@ -310,4 +311,22 @@ exports.postAdminOrderStatus = (req, res, next) => {
 			})
 		})
 		.catch(err => console.log(err));
+}
+
+exports.getOrderDetails = async (req, res, next) => {
+	try{
+		const order = await Order.findById(req.params.orderId);
+		const riders = await Rider.find();
+
+		return res.render('admin/order-details', {
+			pageTitle: 'View Orders | Admin',
+			path: '/admin/orders',
+			order: order,
+			riders: riders
+		})
+	}
+	catch(err){
+		console.log(err)
+		return next(err);
+	}
 }
