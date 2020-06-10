@@ -39,6 +39,7 @@
         </p>
         <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
       </div>
+      <% if (order.status === 'placed' || order.status === 'transit') { %>
       <div class="rider-list">
         <% if (riders.length > 0) { %>
         <ul class="orders-list">
@@ -57,6 +58,7 @@
         <h1>No Riders Found!</h1>
         <% } %>
       </div>
+      <% } %>
     </div>
   </main>
 
