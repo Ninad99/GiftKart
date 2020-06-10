@@ -47,7 +47,7 @@ exports.postRiderLogin = async (req, res, next) => {
     const rider = await Rider.findOne({ email: email });
 
     if (rider) {
-      const passwordMatch = bcrypt.compare(password, rider.password);
+      const passwordMatch = await bcrypt.compare(password, rider.password);
       if (passwordMatch) {
         req.session.isLoggedIn = true;
         req.session.isRider = true;
@@ -61,22 +61,16 @@ exports.postRiderLogin = async (req, res, next) => {
           }
         });
       } else {
-        return res.status(422).render('rider/rider-login', {
-          pageTitle: 'GiftKart | Rider Login',
-          path: '/rider/login',
-          errorMessage: 'Invalid rider email or password',
-          oldInput: {
-            email: email,
-            password: password
-          }
-        });
+        throw new Error('Invalid rider email or password');
       }
+    } else {
+      throw new Error('User not found');
     }
   } catch (err) {
-    return res.status(400).render('rider/rider-login', {
+    return res.status(422).render('rider/rider-login', {
       pageTitle: 'GiftKart | Rider Login',
       path: '/rider/login',
-      errorMessage: 'Invalid rider email or password',
+      errorMessage: err,
       oldInput: {
         email: email,
         password: password
