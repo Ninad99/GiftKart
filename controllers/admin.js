@@ -315,11 +315,22 @@ exports.getOrderDetails = async (req, res, next) => {
     const order = await Order.findById(req.params.orderId);
     const riders = await Rider.find();
 
+    let orderAssignedTo = null;
+
+    for (let i in riders) {
+      for (let j in riders[i].assignedOrders) {
+        if (req.params.orderId.toString() === riders[i].assignedOrders[j].toString()) {
+          orderAssignedTo = riders[i];
+        }
+      }
+    }
+
     return res.render('admin/order-details', {
       pageTitle: 'View Orders | Admin',
       path: '/admin/orders',
       order: order,
-      riders: riders
+      riders: riders,
+      orderAssignedTo: orderAssignedTo
     });
   } catch (err) {
     console.log(err);

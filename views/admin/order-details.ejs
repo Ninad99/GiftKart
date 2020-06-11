@@ -38,6 +38,18 @@
           <%= order.address.pin %>
         </p>
         <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+        <% if (orderAssignedTo !== null && order.status === 'transit') { %>
+        <div class="orders-list__item">
+          <h4>This Order is Assigned to:</h4>
+          <p>
+            Email: <strong><%= orderAssignedTo.email %></strong><br />
+          </p>
+          <p>Rider ID: <strong><%= orderAssignedTo._id %></strong><br />
+          </p>
+          <p>Completed Orders: <strong><%= orderAssignedTo.completedOrders %></strong><br />
+          </p>
+        </div>
+        <% } %>
       </div>
       <% if ( order.status === 'placed') { %>
       <div class="rider-list">
