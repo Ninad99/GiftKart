@@ -91,4 +91,7 @@ router.post('/change-order-status', isAdmin, adminController.postAdminOrderStatu
 // /order/orderId -> GET
 router.get('/orders/:orderId', isAdmin, adminController.getOrderDetails);
 
+// /assign-order-rider -> POST
+router.post('/assign-order-rider', isAdmin, adminController.assignOrderToRider);
+
 module.exports = router;
