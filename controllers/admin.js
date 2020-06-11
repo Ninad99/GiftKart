@@ -298,12 +298,7 @@ exports.postAdminOrderStatus = async (req, res, next) => {
     order.status = orderStatus;
     await order.save();
 
-    const orders = await Order.find();
-    return res.render('admin/orders', {
-      pageTitle: 'View Orders | Admin',
-      path: '/admin/orders',
-      orders: orders
-    });
+    return res.redirect(`/admin/orders/${orderId}`);
   } catch (err) {
     console.log(err);
     return next(err);
