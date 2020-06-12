@@ -298,12 +298,7 @@ exports.postAdminOrderStatus = async (req, res, next) => {
     order.status = orderStatus;
     await order.save();
 
-    const orders = await Order.find();
-    return res.render('admin/orders', {
-      pageTitle: 'View Orders | Admin',
-      path: '/admin/orders',
-      orders: orders
-    });
+    return res.redirect(`/admin/orders/${orderId}`);
   } catch (err) {
     console.log(err);
     return next(err);
@@ -315,11 +310,22 @@ exports.getOrderDetails = async (req, res, next) => {
     const order = await Order.findById(req.params.orderId);
     const riders = await Rider.find();
 
+    let orderAssignedTo = null;
+
+    for (const rider of riders) {
+      for (const assignedOrder of rider.assignedOrders) {
+        if (req.params.orderId.toString() === assignedOrder.toString()) {
+          orderAssignedTo = rider;
+        }
+      }
+    }
+
     return res.render('admin/order-details', {
       pageTitle: 'View Orders | Admin',
       path: '/admin/orders',
       order: order,
-      riders: riders
+      riders: riders,
+      orderAssignedTo: orderAssignedTo
     });
   } catch (err) {
     console.log(err);
