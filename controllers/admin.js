@@ -312,10 +312,10 @@ exports.getOrderDetails = async (req, res, next) => {
 
     let orderAssignedTo = null;
 
-    for (let i in riders) {
-      for (let j in riders[i].assignedOrders) {
-        if (req.params.orderId.toString() === riders[i].assignedOrders[j].toString()) {
-          orderAssignedTo = riders[i];
+    for (const rider of riders) {
+      for (const assignedOrder of rider.assignedOrders) {
+        if (req.params.orderId.toString() === assignedOrder.toString()) {
+          orderAssignedTo = rider;
         }
       }
     }
