@@ -7,67 +7,13 @@
 <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
 </head>
 
-<body onload="getLocation()">
+<body onload="getGeoLocation()">
   <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
   <main>
-    <div style="margin: 0; padding: 0; display: flex;">
-      <div style="width: 66vw;height: 80vh;">
-        <div style="height: 100%; width: 100%;" id="map"></div>
-        <script>
-          const platform = new H.service.Platform({ apikey: 'QeQ1GSfDvpTOIJTJtLhZ5NT2sc2j3a3nPYLw_8XDEu0' });
-          const defaultLayers = platform.createDefaultLayers();
-          const map = new H.Map(document.getElementById('map'),
-            defaultLayers.vector.normal.map, {
-            zoom: 13,
-            pixelRatio: window.devicePixelRatio || 1
-          });
-          window.addEventListener('resize', () => map.getViewPort().resize());
-          const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-          const ui = H.ui.UI.createDefault(map, defaultLayers);
-
-          function showPosition(position) {
-            var address = '<%= order.address.house %>' + ", " + '<%= order.address.street %>' + ", " + '<%= order.address.city %>'
-            const searchText = address.toString();
-            const geocoder = platform.getGeocodingService();
-            geocoder.geocode({ searchText }, result => {
-              const location = result.Response.View[0].Result[0].Location.DisplayPosition;
-              const { Latitude: lat, Longitude: lng } = location;
-              const marker = new H.map.Marker({ lat, lng });
-
-              map.addObject(marker);
-
-              const request = {
-                mode: 'fastest;car',
-                waypoint0: `geo!${lat},${lng}`,
-                waypoint1: `geo!${position.coords.latitude},${position.coords.longitude}`,
-                representation: 'display'
-              };
-
-              const router = platform.getRoutingService();
-              router.calculateRoute(request, response => {
-                const shape = response.response.route[0].shape.map(x => x.split(','));
-                const linestring = new H.geo.LineString();
-                shape.forEach(s => linestring.pushLatLngAlt(s[0], s[1]));
-
-                const routeLine = new H.map.Polyline(linestring, {
-                  style: { strokeColor: 'blue', lineWidth: 3 }
-                });
-
-                map.addObject(routeLine);
-
-                map.getViewModel().setLookAtData({ bounds: routeLine.getBoundingBox() });
-              });
-            });
-          }
-
-          function getLocation() {
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-              alert("Some Thing went wrong")
-            }
-          }
-        </script>
+    <div class="order-details-container">
+      <div class="map-container">
+        <div id="map"></div>
+        <%- include('../includes/map-script.ejs') %>
       </div>
       <div style="border: none;" class="orders-list__item">
         <h3>Order #<%= order._id %></h3>
@@ -99,6 +45,16 @@
           <strong>Pin: </strong><%= order.address.pin %>
         </p>
         <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+        <div class="location-info-container">
+          <div class="location-info-container-item">
+            <img src="/img/markers/BlueMarker.svg" />
+            <h3>Your Current Location</h3>
+          </div>
+          <div class="location-info-container-item">
+            <img src="/img/markers/GreenMarker.svg" />
+            <h3>Order Destination</h3>
+          </div>
+        </div>
         <% if (order.status === 'transit') { %>
         <div class="dropdown">
           <button class="btn">Change Status &#8595;</button>
@@ -128,7 +84,6 @@
         <% } %>
       </div>
     </div>
-
   </main>
 
   <%- include('../includes/end.ejs') %>
