@@ -7,13 +7,13 @@
 
   <main>
     <p class="page-header centered"><strong>GiftKart</strong> | Rider Portal</p>
-
+    <p class="page-header centered">Your Assigned Orders</p>
     <div class="grid">
-      <% if (orders.length === 0) { %>
+      <% if (assignedOrders.length === 0) { %>
       <h2>No orders to show</h2>
       <% } else { %>
       <ul class="orders-list">
-        <% orders.forEach(order => { %>
+        <% assignedOrders.forEach(order => { %>
         <li class="orders-list__item">
           <h3>Order #<%= order._id %></h3>
           <p>Contains: <strong><%= order.products.length %></strong> Item(s)</p>
@@ -26,7 +26,35 @@
             <% } %>
           </h4>
           <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
-          <a class="btn accent filled" href="/admin/orders/<%= order._id %>">Order Details</a>
+          <a class="btn accent filled" href="/rider/rider-portal/<%= order._id %>">Order Details</a>
+          <hr />
+          <h4>Amount of Collection - &#8377;<%= order.totalAmount %></h4>
+        </li>
+        <% }); %>
+      </ul>
+      <% } %>
+    </div>
+    <hr />
+    <p class="page-header centered">Your Completed Orders</p>
+    <div class="grid">
+      <% if (completedOrders.length === 0) { %>
+      <h2>No orders to show</h2>
+      <% } else { %>
+      <ul class="orders-list">
+        <% completedOrders.forEach(order => { %>
+        <li class="orders-list__item">
+          <h3>Order #<%= order._id %></h3>
+          <p>Contains: <strong><%= order.products.length %></strong> Item(s)</p>
+          <h4>
+            Order Status:
+            <% if (order.status === 'transit') { %>
+            <span style="color: #FF9800;">Pending Delivery</span>
+            <% } else  { %>
+            <strong style="color: green;">Delivered</strong>
+            <% } %>
+          </h4>
+          <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+          <a class="btn accent filled" href="/rider/rider-portal/<%= order._id %>">Order Details</a>
           <hr />
           <h4>Amount of Collection - &#8377;<%= order.totalAmount %></h4>
         </li>
