@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Rider = require('../models/rider');
+const Order = require("../models/order");
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
@@ -129,11 +130,14 @@ exports.postRiderSignup = async (req, res, next) => {
 exports.getRiderPortal = async (req, res, next) => {
   try {
     const rider = await Rider.findOne({ _id: req.session.rider._id });
+    const orders = await Order.find({_id:{$in:rider.assignedOrders}});
+
     return res.render('rider/rider-portal', {
       completedOrders: rider.completedOrders,
       assignedOrders: rider.assignedOrders,
       pageTitle: 'GiftKart | Rider portal',
-      path: 'rider/rider-portal'
+      path: 'rider/rider-portal',
+      orders: orders
     });
   } catch (err) {
     console.log(err);

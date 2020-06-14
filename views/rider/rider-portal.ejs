@@ -1,6 +1,5 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/auth.css">
+<link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
@@ -10,18 +9,31 @@
     <p class="page-header centered"><strong>GiftKart</strong> | Rider Portal</p>
 
     <div class="grid">
-      <% if (assignedOrders.length > 0) { %>
-      <% for (let assignedOrder of assignedOrders) { %>
-      <article class="card product-item">
-        <div class="card__image">
-          <p>gg</p>
-        </div>
-      </article>
+      <% if (orders.length === 0) { %>
+      <h2>No orders to show</h2>
+      <% } else { %>
+      <ul class="orders-list">
+        <% orders.forEach(order => { %>
+        <li class="orders-list__item">
+          <h3>Order #<%= order._id %></h3>
+          <p>Contains: <strong><%= order.products.length %></strong> Item(s)</p>
+          <h4>
+            Order Status:
+            <% if (order.status === 'transit') { %>
+            <span style="color: #FF9800;">Pending Delivery</span>
+            <% } else  { %>
+            <strong style="color: green;">Delivered</strong>
+            <% } %>
+          </h4>
+          <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+          <a class="btn accent filled" href="/admin/orders/<%= order._id %>">Order Details</a>
+          <hr />
+          <h4>Amount of Collection - &#8377;<%= order.totalAmount %></h4>
+        </li>
+        <% }); %>
+      </ul>
       <% } %>
     </div>
-    <% } else { %>
-    <h1>No assignedOrders found!</h1>
-    <% } %>
-    <h1><%= completedOrders %></h1>
+
   </main>
   <%- include('../includes/end.ejs') %>
