@@ -151,11 +151,13 @@ exports.getAssignedOrderDetails = async (req, res, next) => {
   let assignedOrderId = req.params.assignedOrderId;
   try {
     const order = await Order.findOne({ _id: assignedOrderId });
+    const hereMapApiKey =  process.env.HEREMAPS_API_KEY;
 
     return res.render('rider/assigned-order-details', {
       pageTitle: 'GiftKart | Assigned Order Details',
       path: `rider/rider-portal/${assignedOrderId}`,
-      order: order
+      order: order,
+      hereMapApiKey: hereMapApiKey
     });
   } catch (err) {
     console.log(err);
