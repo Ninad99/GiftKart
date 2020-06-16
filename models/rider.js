@@ -16,11 +16,12 @@ const riderSchema = new Schema({
       ref: 'Order'
     }
   ],
-  completedOrders: {
-    type: Number,
-    required: true,
-    default: 0
-  }
+  completedOrders: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Order'
+    }
+  ]
 });
 
 module.exports = mongoose.model('Rider', riderSchema);

@@ -56,6 +56,13 @@ router.post(
   riderController.postRiderSignup
 );
 
+// /rider-portal -> GET
 router.get('/rider-portal', isRider, riderController.getRiderPortal);
+
+// /rider-portal/:assignedOrderId -> GET
+router.get('/rider-portal/:assignedOrderId', isRider, riderController.getAssignedOrderDetails);
+
+// /rider-portal/change-order-status -> POST
+router.post('/rider-portal/change-order-status', isRider, riderController.postRiderOrderStatus);
 
 module.exports = router;

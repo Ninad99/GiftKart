@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Rider = require('../models/rider');
+const Order = require('../models/order');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator');
@@ -129,12 +130,70 @@ exports.postRiderSignup = async (req, res, next) => {
 exports.getRiderPortal = async (req, res, next) => {
   try {
     const rider = await Rider.findOne({ _id: req.session.rider._id });
+    const assignedOrders = await Order.find({ _id: { $in: rider.assignedOrders } });
+    const completedOrders = await Order.find({ _id: { $in: rider.completedOrders } });
+
     return res.render('rider/rider-portal', {
       completedOrders: rider.completedOrders,
       assignedOrders: rider.assignedOrders,
       pageTitle: 'GiftKart | Rider portal',
-      path: 'rider/rider-portal'
+      path: 'rider/rider-portal',
+      assignedOrders: assignedOrders,
+      completedOrders: completedOrders
     });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+};
+
+exports.getAssignedOrderDetails = async (req, res, next) => {
+  let assignedOrderId = req.params.assignedOrderId;
+  try {
+    const order = await Order.findOne({ _id: assignedOrderId });
+    const hereMapApiKey =  process.env.HEREMAPS_API_KEY;
+
+    return res.render('rider/assigned-order-details', {
+      pageTitle: 'GiftKart | Assigned Order Details',
+      path: `rider/rider-portal/${assignedOrderId}`,
+      order: order,
+      hereMapApiKey: hereMapApiKey
+    });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+};
+
+exports.postRiderOrderStatus = async (req, res, next) => {
+  let newOrderStatus = req.body.orderStatus;
+  let assignedOrderId = req.body.orderId;
+
+  try {
+    let orderAssignedTo = null;
+    const riders = await Rider.find();
+
+    for (const rider of riders)
+      for (const assignedOrder of rider.assignedOrders)
+        if (assignedOrderId.toString() === assignedOrder.toString()) orderAssignedTo = rider;
+
+    const rider = await Rider.findById(orderAssignedTo._id);
+    const order = await Order.findById(assignedOrderId);
+
+    //Changin rider Data
+    const newCompletedOrders = [...rider.completedOrders];
+    newCompletedOrders.push(assignedOrderId);
+    rider.completedOrders = newCompletedOrders;
+    let index = rider.assignedOrders.indexOf(assignedOrderId);
+    if (index > -1) rider.assignedOrders.splice(index, 1);
+
+    //Changin order Data
+    order.status = newOrderStatus;
+
+    await order.save();
+    await rider.save();
+
+    return res.redirect(`/rider/rider-portal/${assignedOrderId}`);
   } catch (err) {
     console.log(err);
     return next(err);

@@ -102,6 +102,30 @@
   overflow-x: hidden;
 }
 
+.map-container{
+  height: 80vh;
+  width: 66%;
+}
+
+#map{
+  height: 100%; 
+  width: 100%;
+}
+
+.location-info-container{
+  display: flex; 
+  flex-direction: column;
+}
+
+.location-info-container-item {
+  display: flex;
+}
+
+.location-info-container-item img {
+  width: 75px;
+  height: 75px;
+}
+
 @media screen and (max-width: 768px) {
   .products-container {
     width: 100%;
@@ -129,5 +153,10 @@
     display: flex; 
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  .map-container{
+    height: 80vh;
+    width: 100%;
   }
 }

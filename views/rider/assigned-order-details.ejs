@@ -1,0 +1,89 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+</head>
+
+<body onload="getGeoLocation()">
+  <%- include('../includes/navigation.ejs', { cartItems: cartItems }) %>
+  <main>
+    <div class="order-details-container">
+      <div class="map-container">
+        <div id="map"></div>
+        <%- include('../includes/map-script.ejs') %>
+      </div>
+      <div style="border: none;" class="orders-list__item">
+        <h3>Order #<%= order._id %></h3>
+        <ul>
+          <% order.products.forEach(p => { %>
+          <li>
+            <%= p.productData.title %> (<%= p.quantity %>)
+          </li>
+          <% }); %>
+        </ul>
+        <h4>Total amount - &#8377;<%= order.totalAmount %></h4>
+        <hr />
+        <h4>
+          Order Status:
+          <% if (order.status === 'transit') { %>
+          <span style="color: #FF9800;">Pending Delivery</span>
+          <% } else if (order.status === 'cancelled') { %>
+          <strong style="color: red;">Cancelled</strong>
+          <% } else { %>
+          <strong style="color: green;">Delivered</strong>
+          <% } %>
+        </h4>
+        <h4>Shipping address:</h4>
+        <p>
+          <strong>Name: </strong><%= order.address.name %><br />
+          <strong>House: </strong><%= order.address.house %>,<br />
+          <strong>Street: </strong><%= order.address.street %>,<br />
+          <strong>City: </strong><%= order.address.city %>,<br />
+          <strong>Pin: </strong><%= order.address.pin %>
+        </p>
+        <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+        <div class="location-info-container">
+          <div class="location-info-container-item">
+            <img src="/img/markers/BlueMarker.svg" />
+            <h3>Your Current Location</h3>
+          </div>
+          <div class="location-info-container-item">
+            <img src="/img/markers/GreenMarker.svg" />
+            <h3>Order Destination</h3>
+          </div>
+        </div>
+        <% if (order.status === 'transit') { %>
+        <div class="dropdown">
+          <button class="btn">Change Status &#8595;</button>
+          <div class="dropdown-content">
+            <form action="/rider/rider-portal/change-order-status" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="delivered" name="orderStatus" />
+              <% if (order.status === 'delivered') { %>
+              <button disabled>Delivered</button>
+              <% } else { %>
+              <button type="submit">Delivered</button>
+              <% } %>
+            </form>
+            <form action="/rider/rider-portal/change-order-status" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="cancelled" name="orderStatus" />
+              <% if (order.status === 'cancelled') { %>
+              <button disabled>Cancelled</button>
+              <% } else { %>
+              <button type="submit">Cancelled</button>
+              <% } %>
+            </form>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </main>
+
+  <%- include('../includes/end.ejs') %>
