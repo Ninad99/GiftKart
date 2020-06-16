@@ -38,6 +38,51 @@
           <%= order.address.pin %>
         </p>
         <h5>Placed on - <%= order.orderDate.toDateString() %> <%= order.orderDate.toTimeString() %></h5>
+        <div class="dropdown">
+          <button class="btn">Change Status &#8595;</button>
+          <div class="dropdown-content">
+            <form action="/admin/change-order-status" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="transit" name="orderStatus" />
+              <% if (order.status === 'transit') { %>
+              <button disabled>In Transit</button>
+              <% } else { %>
+              <button type="submit">In Transit</button>
+              <% } %>
+            </form>
+            <form action="/admin/change-order-status" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="delivered" name="orderStatus" />
+              <% if (order.status === 'delivered') { %>
+              <button disabled>Delivered</button>
+              <% } else { %>
+              <button type="submit">Delivered</button>
+              <% } %>
+            </form>
+            <form action="/admin/change-order-status" method="POST">
+              <input type="hidden" value="<%= order._id %>" name="orderId" />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <input type="hidden" value="cancelled" name="orderStatus" />
+              <% if (order.status === 'cancelled') { %>
+              <button disabled>Cancelled</button>
+              <% } else { %>
+              <button type="submit">Cancelled</button>
+              <% } %>
+            </form>
+          </div>
+        </div>
+        <% if (orderAssignedTo !== null && order.status === 'transit') { %>
+        <div class="orders-list__item">
+          <h4>This Order is Assigned to:</h4>
+          <p>Email: <strong><%= orderAssignedTo.email %></strong><br /></p>
+          <p>Rider ID: <strong><%= orderAssignedTo._id %></strong><br /></p>
+          <p>Completed Orders: <strong><%= orderAssignedTo.completedOrders %></strong><br /></p>
+        </div>
+        <% } else if(order.status === 'placed') { %>
+        <p><strong>This Order needs a Rider &#8594;</strong><br /></p>
+        <% } %>
       </div>
       <% if ( order.status === 'placed') { %>
       <div class="rider-list">
